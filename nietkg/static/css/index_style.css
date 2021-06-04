@@ -1,0 +1,130 @@
+	.nav_item{
+		 text-align: center;	 
+	}
+	li > img{
+		max-height: 100px;
+	}
+   .product {
+    box-shadow: 0 1px 10px rgba(0,0,0,0.12), 0 1px 10px rgba(0,0,0,0.44);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    padding: 15px;
+    margin :auto;
+    margin-top : 20px;
+    background-color: #fff;
+    max-width: 265px;
+}
+.product__favorites {
+    z-index: 1;
+    position: absolute;
+    margin-top: -15px;
+    margin-left: -15px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+.mcolor{
+	background-color: #03A9F4;
+}
+.favorites__icon {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 14px;
+    height: 14px;
+}
+#product__img{
+	margin-left:30px;
+}
+#product__img .img__wrap {
+    width: 100%;
+    height: 0;
+    padding-bottom: 69.5%;
+    position: relative;
+    display: block;
+}
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+.img__wrap img {
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 175px;
+}
+.img__wrap img:hover {
+    transform: scale(1.2);
+}
+.product__content {
+    padding: 25px 20px 15px 20px;
+}
+.product__content .product__title {
+    text-align: center;
+    padding-bottom: 9px;
+    margin-top: 10px;
+    border-bottom: 1px solid #edf5f4;
+    height: 30px;
+    overflow: hidden;
+}
+.product__title .title__text {
+    overflow: hidden;
+    text-transform: uppercase;
+    color: #372F2B;
+    font-weight: 500;
+    font-size: 15px;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.product__info .info__block {
+    padding-top: 15px;
+    overflow: hidden;
+    position: relative;
+    color: #333;
+    font-weight: 400;
+    padding-bottom: 2px;
+}
+.info__block span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1700px;
+    font-size: 16px;
+    line-height: 18px;
+}
+.info__block  #search_span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1700px;
+    font-size: 16px;
+    font-weight: bolder;
+    line-height: 18px;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+b {
+    font-weight: bold;
+}
+.product__info .info__block .info__icon {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    display: inline-block;
+    vertical-align: middle;
+    color: #85F460;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 14px;
+    height: 12px;
+}

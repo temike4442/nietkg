@@ -1,0 +1,72 @@
+.panel-tabs  li:nth-child(1) {width: 120px;height: 112px;}
+.panel-tabs  li:nth-child(2) {width: 120px;height: 112px;}
+.panel-tabs  li:nth-child(3) {width: 120px;height: 112px;}
+.panel-tabs  li:nth-child(4) {width: 120px;height: 112px;}
+.panel-tabs  li:nth-child(5) {width: 120px;height: 112px;}
+.panel-tabs  li:nth-child(6) {width: 120px;height: 112px;}
+.panel-tabs  li:nth-child(7) {width: 120px;height: 112px;}
+.panel-tabs  li:nth-child(8) {width: 120px;height: 112px;}
+.panel-tabs  li:nth-child(9) {width: 120px;height: 112px;}
+
+#hr_nav{
+    color: white;
+}
+.panel-tabs  li {
+    text-align: center;
+    padding: 1% 0;
+    border:5px solid #73797D ;
+    margin: auto;
+}
+.panel-tabs {
+    padding: 10px 5%;
+}
+.panel-tabs a {
+    color: white;
+    font-size: 13px;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: auto;
+}
+.panel-tabs a i{
+    color: #76B5C8;
+    font-size: 14px;
+    font-weight: 550;
+    text-transform: uppercase;
+}
+
+.panel-tabs a {
+    outline: none !important;
+    text-decoration: none;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease- 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
+
+.flaticon-transport:before{
+    font-size: 45px;
+}
+.flaticon-house:before{
+    font-size: 45px;
+}
+ .flaticon-responsive:before{
+    font-size: 45px;
+}
+.flaticon-hand-shake:before{
+    font-size: 45px;
+}
+.flaticon-football-ball:before{
+    font-size: 45px;
+}
+.flaticon-jumping-horse-silhouette-facing-left-side-view:before{
+    font-size: 45px;
+}
+.flaticon-music-festival-poster:before{
+    font-size: 45px;
+}
+.flaticon-first-aid-kit:before{
+    font-size: 45px;
+}
+.flaticon-indent-all:before{
+    font-size: 45px;
+}
