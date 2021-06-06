@@ -1,114 +1,15 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
 
-<head>
-    <title>Доска обьявлений Uni KG</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/cosmo/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/index_style.css">
-    <link rel="stylesheet" type="text/css" href="css/footer.css">
-    <link rel="stylesheet" type="text/css" href="css/flaticon/flaticon.css">
-    <link rel="stylesheet" type="text/css" href="css/nav_category.css">
-</head>
-
-<body>
-    <nav class="navbar-expand-lg navbar-dark bg-dark fixed-top" id="nav-menu" style="padding-bottom:10px;padding-top: 10px">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse navbar-collapse" id="mynav">
-            <a class=" col-md-2 col-lg-2 col-sm-12 col-xs-12 navbar-brand" href="index.php" style="text-align: center">Aksy KG</a>
-            <ul class="navbar-nav col-md-7 col-lg-7 col-xs-12 col-sm-12 row">
-                <li class="col-md-8 col-lg-8 col-sm-12 col-xs-12 row" style="padding: auto;">
-                    <form class="form form-inline col-md-12 col-lg-12 col-xs-12 col-sm-12" action="search.php" method="GET">
-                        <input class="form-control col-md-10 col-lg-10 col-xs-12 col-sm-12" name="search_text" type="text" placeholder="Поиск...">
-                        <button class="btn btn-secondary col-md-2 col-lg-2 col-sm-12 col-xs-12" type="submit">Поиск</button>
-                    </form>
-                </li>
-                <li class="nav-item  col-md-4 col-xs-12" style=" text-align: center">
-                    <a class="btn btn-primary" href="add_post.php" style="font-size: 18px; color: #fff; background-color: #3EAEE2;">
-                        <i class="fas fa-plus-circle fa-1x" aria-hidden="true"></i>
-                        Подать обьявление
-                    </a>
-                    </button>
-                </li>
-            </ul>
-            <div class=" col-lg-3 col-md-3 col-xs-12" style="padding-top: 10px; text-align: center">
-            </div>
-    </nav>
-    <div id="panel_cat" style="margin-top: 40px; background-color: #373a3c; ">
-        <hr id="hr_nav">
-        <ul class="nav panel-tabs">
-            <a href="category.php?cat_id=2">
-                <li>
-                    <i class="flaticon-transport"></i>
-                    <div>Авто</div>
-                </li>
-            </a>
-            <a href="category.php?cat_id=1">
-                <li>
-                    <i class="flaticon-house"></i>
-                    <div>Недвижимость</div>
-                </li>
-            </a>
-            <a href="category.php?cat_id=3">
-                <li>
-                    <i class="flaticon-responsive"></i>
-                    <div>Электроника</div>
-                </li>
-            </a>
-            <a href="category.php?cat_id=4">
-                <li>
-                    <i class="flaticon-hand-shake"></i>
-                    <div>Работа</div>
-                </li>
-            </a>
-            <a href="category.php?cat_id=5">
-                <li>
-                    <i class="flaticon-football-ball"></i>
-                    <div>Спорт</div>
-                </li>
-            </a>
-            <a href="category.php?cat_id=25">
-                <li>
-                    <i class="flaticon-jumping-horse-silhouette-facing-left-side-view"></i>
-                    <div>Животные</div>
-                </li>
-            </a>
-            <a href="#tab8">
-                <li>
-                    <i class="flaticon-music-festival-poster"></i>
-                    <div>Развлечение</div>
-                </li>
-            </a>
-            <a href="category.php?cat_id=7">
-                <li>
-                    <i class="flaticon-first-aid-kit"></i>
-                    <div>Здоровье</div>
-                </li>
-            </a>
-            <a href="#tab10">
-                <li>
-                    <i class="flaticon-indent-all"></i>
-                    <div>Все</div>
-                </li>
-            </a>
-        </ul>
-    </div>
+{% block content %}
     <!-- VIP content -->
-    <div class="container" id="premium-content" style=" padding: 25px 0;">
-        <div class="product " id="">
+    <div class="container" id="vip-content" style=" padding: 25px 0;">
+        <div class="product-vip">
             <div class="product__favorites mcolor">
                 <b class="favorites__icon">
                     <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
-                </b>
+                </b><b id="vip_text">VIP</b>
             </div>
-            <div id="product__img">
+            <div class="vip__img">
                 <a href="ad.php?ad='.$id.'" class="img__wrap">
                     <img src="'.$image.'" alt="" class="img">
                 </a>
@@ -131,14 +32,8 @@
     </div>
     <!-- end VIP content -->
     <!-- Default content -->
-    <div class="container" id="premium-content" style=" padding: 25px 0;">
-        <h4></h4>
-        <div class="product " id="">
-            <div class="product__favorites mcolor">
-                <b class="favorites__icon">
-                    <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
-                </b>
-            </div>
+    <div class="container" id="content" style=" padding: 25px 0;">
+        <div class="product">
             <div id="product__img">
                 <a href="ad.php?ad='.$id.'" class="img__wrap">
                     <img src="'.$image.'" alt="" class="img">
@@ -160,25 +55,4 @@
             </div>
         </div>
     </div>
-    <!-- end Default content -->
-    <div class="footer ">
-        <div class="footer_right">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-        </div>
-        <div class="footer-left">
-            <p class="footer_links">
-                <a href="#">Главная</a>
-                ·
-                <a href="#">О нас</a>
-                ·
-                <a href="#">Обратная связь</a>
-            </p>
-            <p>UNI KG ©
-                <?php echo date("Y") ?>
-            </p>
-        </div>
-    </div>
-</body>
-
-</html>
+{% endblock %}

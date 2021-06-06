@@ -97,7 +97,7 @@ a {
     font-size: 16px;
     line-height: 18px;
 }
-.info__block  #search_span {
+.info__block  .search_span {
     display: inline-block;
     vertical-align: middle;
     width: 1700px;
