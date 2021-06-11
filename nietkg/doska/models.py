@@ -4,6 +4,13 @@ class Region(models.Model):
     title=models.CharField('Регион',max_length=50)
     is_active=models.BooleanField('Активация')
 
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Регион'
+        verbose_name_plural = 'Регионы'
+
 class Category(models.Model):
     title=models.CharField('Имя категории',max_length=100,null=False,blank=False)
     parent=models.ForeignKey('self',on_delete=models.SET_NULL,null=True)
