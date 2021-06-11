@@ -1,5 +1,9 @@
 from django.db import models
 
+class Region(models.Model):
+    title=models.CharField('Регион',max_length=50)
+    is_active=models.BooleanField('Активация')
+
 class Category(models.Model):
     title=models.CharField('Имя категории',max_length=100,null=False,blank=False)
     parent=models.ForeignKey('self',on_delete=models.SET_NULL,null=True)
@@ -19,6 +23,8 @@ class Ad(models.Model):
     category=models.ForeignKey(Category,on_delete=models.PROTECT,null=False,verbose_name='Категория')
     number=models.CharField('Тел. номер',null=False,blank=False,max_length=50)
     name=models.CharField('Имя',max_length=100)
+    region=models.ForeignKey(Region,on_delete=models.PROTECT,verbose_name='Регион',null=False,blank=False,default=None)
+    address=models.CharField('Адрес',max_length=150,null=True)
     price=models.PositiveIntegerField('Цена',help_text='0 = Договорная')
     valute=models.ForeignKey('Valute',on_delete=models.SET_NULL,null=True,verbose_name='Валюта')
     image=models.ImageField(blank=True)
