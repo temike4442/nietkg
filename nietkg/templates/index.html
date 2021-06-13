@@ -1,58 +1,229 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <!-- VIP content -->
-    <div class="container" id="vip-content" style=" padding: 25px 0;">
-        <div class="product-vip">
-            <div class="product__favorites mcolor">
-                <b class="favorites__icon">
-                    <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
-                </b><b id="vip_text">VIP</b>
+<!--    Search content -->
+<div class="col-12 row" id="search_content">
+    <form class="form form-inline col-md-12 col-lg-12 col-xs-12 col-sm-12 row" action="search.php" method="GET">
+        <select class="form-control col-lg-3 col-md-3 col-sm-3 col-xs-12 search_border" id="exampleFormControlSelect1">
+            <option>Все районы</option>
+            {% for region in regions %}
+            <option>{{ region }}</option>
+            {% endfor %}
+        </select>
+        <input class="form-control col-lg-7 col-md-7 col-xs-12 col-sm-9 search_border" name="search_text" type="text"
+               placeholder="Поиск...">
+        <button class="btn btn-secondary col-md-2 col-lg-2 col-sm-12 col-xs-12 search_border" type="submit">Поиск
+        </button>
+    </form>
+</div>
+
+
+<!-- VIP content -->
+<div class="container" id="vip-content" style=" padding: 25px 0;">
+    <!-- Carousel wrapper -->
+    <div class="container my-4">
+        <!--Carousel Wrapper-->
+        <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+
+            <!--Controls-->
+            <div class="col-12" style="padding:auto">
+                <a  href="#multi-item-example" data-slide="prev">
+                    <button class="btn-primary"><i class="fa fa-chevron-left" ></i>пред.</button></a>
+                <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right" style="font-size:30px"></i>след.</a>
             </div>
-            <div class="vip__img">
-                <a href="ad.php?ad='.$id.'" class="img__wrap">
-                    <img src="'.$image.'" alt="" class="img">
-                </a>
-            </div>
-            <div class="product__content">
-                <div class="product__title">
-                    <a href="ad.php?ad='.$id.'" class="title__text">'.$title.'</a>
+            <!--/.Controls-->
+
+            <!--Indicators-->
+            <ol class="carousel-indicators">
+                <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+                <li data-target="#multi-item-example" data-slide-to="1"></li>
+                <li data-target="#multi-item-example" data-slide-to="2"></li>
+            </ol>
+            <!--/.Indicators-->
+
+            <!--Slides-->
+            <div class="carousel-inner" role="listbox">
+                <!--First slide-->
+                <div class="carousel-item active">
+
+                    <div class="col-12 row">
+
+                        <div class="col-md-3">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                     src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the
+                                        card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                     src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the
+                                        card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 clearfix d-none d-md-block">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                     src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the
+                                        card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 clearfix d-none d-md-block">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                     src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(35).jpg"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the
+                                        card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
-                <div class="product__info">
-                    <div class="info__block">
-                        <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> '.$price.'</span>
+                <!--/.First slide-->
+
+                <!--Second slide-->
+                <div class="carousel-item">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                     src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(60).jpg"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the
+                                        card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 clearfix d-none d-md-block">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                     src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(47).jpg"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the
+                                        card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 clearfix d-none d-md-block">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                     src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(48).jpg"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the
+                                        card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="info__block">
-                        <b class="info__icon"></b>
-                        <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> '('Y-m-d').'</span>
-                    </div>
+
+                </div>
+                <!--/.Second slide-->
+            </div>
+            <!--/.Slides-->
+
+        </div>
+        <!--/.Carousel Wrapper-->
+
+    </div>
+    <!-- Carousel wrapper -->
+</div>
+<!-- end VIP content -->
+<!-- Default content -->
+<div class="container" id="content" style=" padding: 25px 0;">
+    <div class="product-vip">
+        <div class="product__favorites mcolor">
+            <b class="favorites__icon">
+                <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
+            </b><b id="vip_text">VIP</b>
+        </div>
+        <div class="vip__img">
+            <a href="ad.php?ad='.$id.'" class="img__wrap">
+                <img src="'.$image.'" alt="" class="img">
+            </a>
+        </div>
+        <div class="product__content">
+            <div class="product__title">
+                <a href="ad.php?ad='.$id.'" class="title__text">'.$title.'</a>
+            </div>
+            <div class="product__info">
+                <div class="info__block">
+                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> '.$price.'</span>
+                </div>
+                <div class="info__block">
+                    <b class="info__icon"></b>
+                    <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> '('Y-m-d').'</span>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end VIP content -->
-    <!-- Default content -->
-    <div class="container" id="content" style=" padding: 25px 0;">
-        <div class="product">
-            <div id="product__img">
-                <a href="ad.php?ad='.$id.'" class="img__wrap">
-                    <img src="'.$image.'" alt="" class="img">
-                </a>
+    <!--------------->
+
+    <div class="product">
+        <div id="product__img">
+            <a href="ad.php?ad='.$id.'" class="img__wrap">
+                <img src="'.$image.'" alt="" class="img">
+            </a>
+        </div>
+        <div class="product__content">
+            <div class="product__title">
+                <a href="ad.php?ad='.$id.'" class="title__text">'.$title.'</a>
             </div>
-            <div class="product__content">
-                <div class="product__title">
-                    <a href="ad.php?ad='.$id.'" class="title__text">'.$title.'</a>
+            <div class="product__info">
+                <div class="info__block">
+                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> '.$price.'</span>
                 </div>
-                <div class="product__info">
-                    <div class="info__block">
-                        <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> '.$price.'</span>
-                    </div>
-                    <div class="info__block">
-                        <b class="info__icon"></b>
-                        <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> '('Y-m-d').'</span>
-                    </div>
+                <div class="info__block">
+                    <b class="info__icon"></b>
+                    <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> '('Y-m-d').'</span>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

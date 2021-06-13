@@ -13,7 +13,7 @@ class Region(models.Model):
 
 class Category(models.Model):
     title=models.CharField('Имя категории',max_length=100,null=False,blank=False)
-    parent=models.ForeignKey('self',on_delete=models.SET_NULL,null=True)
+    parent=models.ForeignKey('self',on_delete=models.SET_NULL,null=True,blank=True)
     url=models.SlugField(max_length=100,unique=True)
     icon=models.ImageField(upload_to='icons/',null=True,blank=True)
 

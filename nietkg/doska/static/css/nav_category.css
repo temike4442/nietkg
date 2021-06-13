@@ -1,19 +1,19 @@
-.panel-tabs  li:nth-child(1) {width: 120px;height: 112px;}
-.panel-tabs  li:nth-child(2) {width: 120px;height: 112px;}
-.panel-tabs  li:nth-child(3) {width: 120px;height: 112px;}
-.panel-tabs  li:nth-child(4) {width: 120px;height: 112px;}
-.panel-tabs  li:nth-child(5) {width: 120px;height: 112px;}
-.panel-tabs  li:nth-child(6) {width: 120px;height: 112px;}
-.panel-tabs  li:nth-child(7) {width: 120px;height: 112px;}
-.panel-tabs  li:nth-child(8) {width: 120px;height: 112px;}
-.panel-tabs  li:nth-child(9) {width: 120px;height: 112px;}
+.panel-tabs  li:nth-child(1) {width: 120px;height: 95px;}
+.panel-tabs  li:nth-child(2) {width: 120px;height: 95px;}
+.panel-tabs  li:nth-child(3) {width: 120px;height: 95px;}
+.panel-tabs  li:nth-child(4) {width: 120px;height: 95px;}
+.panel-tabs  li:nth-child(5) {width: 120px;height: 95px;}
+.panel-tabs  li:nth-child(6) {width: 120px;height: 95px;}
+.panel-tabs  li:nth-child(7) {width: 120px;height: 95px;}
+.panel-tabs  li:nth-child(8) {width: 120px;height: 95px;}
+.panel-tabs  li:nth-child(9) {width: 120px;height: 95px;}
 
 #hr_nav{
     color: white;
 }
 .panel-tabs  li {
     text-align: center;
-    padding: 1% 0;
+    padding: 10px 0 0 0;
     border:5px solid #73797D ;
     margin: auto;
 }

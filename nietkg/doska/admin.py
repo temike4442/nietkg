@@ -7,6 +7,7 @@ class AdAdmin(admin.ModelAdmin):
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title','parent')
+    prepopulated_fields = {"url": ("title",)}
 
 class ValuteAdmin(admin.ModelAdmin):
     list_display = ('title',)

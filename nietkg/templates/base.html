@@ -25,7 +25,19 @@
         {% include 'includes/navbar.html' %}
     {% endblock %}
     {% block panel_cat  %}
-        {% include 'includes/panel_cat.html' %}
+        <div id="panel_cat" style="margin-top: 40px; background-color: #373a3c;">
+        <hr id="hr_nav">
+        <ul class="nav panel-tabs">
+            {% for category in category_list %}
+            <a href="{{ category.url }}">
+                <li>
+                    <img src="{{ category.icon.url }}">
+                    <div>{{ category.title }}</div>
+                </li>
+            </a>
+            {% endfor %}
+        </ul>
+</div>
     {% endblock %}
 
     {% block content %}
