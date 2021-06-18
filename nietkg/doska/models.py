@@ -34,7 +34,6 @@ class Ad(models.Model):
     address=models.CharField('Адрес',max_length=150,null=True)
     price=models.PositiveIntegerField('Цена',help_text='0 = Договорная')
     valute=models.ForeignKey('Valute',on_delete=models.SET_NULL,null=True,verbose_name='Валюта')
-    image=models.ImageField(blank=True)
     is_active=models.BooleanField('Активация',default=False)
     is_vip=models.BooleanField('Статус VIP',default=False)
     date=models.DateTimeField('Дата',auto_now_add=True)
@@ -47,7 +46,7 @@ class Ad(models.Model):
         verbose_name_plural='Обьявлении'
 
 class Images(models.Model):
-    image=models.ImageField('Изображение',upload_to='upload_images/')
+    image=models.ImageField('Изображение',upload_to='upload_images/%Y/%m/%d/')
     ad=models.ForeignKey(Ad,on_delete=models.CASCADE)
 
     class Meta:

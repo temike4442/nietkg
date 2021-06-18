@@ -1,100 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Подать обьявление</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/cosmo/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/add_post_style.css">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
-</head>
-<body  style="background-color: #D5D5D5">
-	<nav class="navbar-expand-lg navbar-dark bg-dark fixed-top" id="nav-menu" style="padding-bottom:10px;padding-top: 10px">
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynav" >
-      <span class="navbar-toggler-icon"></span>
-  </button>
-    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse navbar-collapse" id="mynav">
-        <a class=" col-md-2 col-lg-2 col-sm-12 col-xs-12 navbar-brand" href="index.php" style="text-align: center">UNI KG</a>
-        <ul class="navbar-nav col-md-7 col-lg-7 col-xs-12 col-sm-12 row">
-      <li class="col-md-8 col-lg-8 col-sm-12 col-xs-12 row" style="padding: auto;">
-     <form class="form form-inline col-md-12 col-lg-12 col-xs-12 col-sm-12" action="search.php" method="GET">
-      <input class="form-control col-md-10 col-lg-10 col-xs-12 col-sm-12" name="search_text" type="text" placeholder="Поиск...">
-      <button class="btn btn-secondary col-md-2 col-lg-2 col-sm-12 col-xs-12" type="submit">Поиск</button>
-    </form>
-      </li>
-      <li class="nav-item  col-md-4 col-xs-12" style=" text-align: center">
-          <a class="btn btn-primary" href="add_post.php" style="font-size: 18px; color: #fff; background-color: #3EAEE2;">
-          <i class="fas fa-plus-circle fa-1x" aria-hidden="true"></i>
-          Подать обьявление
-        </a>
-        </button>
-      </li>
-    </ul>     
-    <div  class=" col-lg-3 col-md-3 col-xs-12"  style="padding-top: 10px; text-align: center">
-    </div>
-</nav> 
-
-	<div id="main_content" class="col-lg-8 col-md-8">
+{% extends 'base.html' %}
+{% block content %}
+		<div id="main_content" class="col-lg-8 col-md-8">
 		<h3 align="center">Добавить обьявление</h3>
 		<br>
-		<div id="loading" class="alert d-none" style="text-align: center;">
-		<img class="mx-auto" src="image/preloader.gif" >
-		</div>
-		<div class="alert alert-success text-center d-none" id="msg_success">Обьявление успешно добавлено!</div>
-		<form id="add_form" class="form" role="form" enctype="multipart/form-data">
-			<label>Заголовок обьявления*</label>
-			<input class="form-control input-box" id="ad_title" type="text" name="title" >
-			<label>Описание</label>
-			<textarea class="form-control input-box" id="ad_body" rows="8" cols="45" name="body"></textarea>
-			<label>Выбрать категорию*</label>
-			<select id="select_cat" class="form-control input-box" name="category">
-			<option value="0" selected>--Выберите категории--</option>
+		<form method="POST" class="post-form" enctype="multipart/form-data">
+			{% csrf_token %}
+				{{ form.as_p }}
+		<input type="file" multiple name="images">
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
 
-			</select>
-			<div id="sub_cat" style="display: none;">
-				<label>Выбрать под категорию</label>
-				<select id="select_cat_sub" class="form-control input-box" name="sub_category">
-				</select>
-			</div>
-			<br>
-			<div id="sub_cat_2" style="display: none; margin-left: 50px;">
-			
-				<select id="select_cat_sub_2" class="form-control input-box" name="sub_category_2">
-				</select>
-			</div>
-			<br>
-			<label>Телефон номер*</label>
-			<input class="form-control input-box col-lg-4" id="ad_phone" type="tel" name="phone" placeholder="+996">
-			<br>
-			<label>Цена</label>
-
-			<div class="row" style="margin-left: 0px;margin-right: 0px;">
-			  <input type="text" class="form-control input-box col-lg-4" id="price" name="price" placeholder="Договорная">
-			    <select class="form-control input-box col-lg-2" name="price_valute">
-				<option selected>Сом</option>
-				<option>$</option>
-				</select>
-			</div>
-			<br>
-			<label>Главное изображение</label>
-			<input type="hidden" name="MAX_FILE_SIZE" value="999999999">
-			<input class="form-control" type="file" id="ad_image" name="image" accept="image/*">
-			<br>
-			<label>Фотогалерея</label>
-			<div id="object">
-              <div class="" id="add_img1">
-                <input type="hidden" name="MAX_FILE_SIZE" value="999999999">
-                <input type="file" name="gallery_img[]" class="form-control"  style="border-bottom: 1px solid;padding-bottom: 5px;">
-              </div>
-            </div>
-            <br>
-            <p id="add_input" class="btn btn-success btn-sm">Ещё добавить</p>
-            <br>
-			<p class="btn btn-primary form-control input-box" id="ad_submit">Опубликовать</p>
-		</form>
 	</div>
-</body>
-</html>
+{% endblock %}
+

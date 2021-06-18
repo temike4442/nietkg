@@ -8,7 +8,8 @@ from .models import *
 from .views import *
 
 urlpatterns = [
-    path('',HomeView.as_view(),name='home')
+    path('',HomeView.as_view(),name='home'),
+    path('add/',add_new,name='add'),
 ]
 
 if settings.DEBUG:
