@@ -29,13 +29,19 @@
         <hr id="hr_nav">
         <ul class="nav panel-tabs">
             {% for category in category_list %}
-            <a href="{{ category.url }}">
+            <a href="{% url 'category' category.pk %}">
                 <li>
                     <img src="{{ category.icon.url }}">
                     <div>{{ category.title }}</div>
                 </li>
             </a>
             {% endfor %}
+            <a href="{% url 'all_categories' %}">
+                <li>
+                    <img src="{% static 'icons/all.png' %}">
+                    <div>Все категории</div>
+                </li>
+            </a>
         </ul>
 </div>
     {% endblock %}

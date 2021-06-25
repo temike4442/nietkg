@@ -1,122 +1,93 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Доска обьявлений Aksy KG</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
- 	<link rel="stylesheet" type="text/css" href="css/ad_style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/cosmo/bootstrap.min.css">
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
- 	<link rel="stylesheet" type="text/css" href="css/index_style.css">  
- 	<link rel="stylesheet" type="text/css" href="css/footer.css"> 
- 	<link rel="stylesheet" type="text/css" href="css/css/font-awesome.css"> 
-</head>
-<body style="background-color: #D5D5D5"> 
-<nav class="navbar-expand-lg navbar-dark bg-dark fixed-top" id="nav-menu" style="padding-bottom:10px;padding-top: 10px">
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynav" >
-      <span class="navbar-toggler-icon"></span>
-  </button>
-    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse navbar-collapse" id="mynav">
-        <a class=" col-md-2 col-lg-2 col-sm-12 col-xs-12 navbar-brand" href="index.html" style="text-align: center">Aksy KG</a>
-        <ul class="navbar-nav col-md-7 col-lg-7 col-xs-12 col-sm-12 row">
-      <li class="col-md-8 col-lg-8 col-sm-12 col-xs-12 row" style="padding: auto;">
-     <form class="form form-inline col-md-12 col-lg-12 col-xs-12 col-sm-12" action="search.php" method="GET">
-      <input class="form-control col-md-10 col-lg-10 col-xs-12 col-sm-12" name="search_text" type="text" placeholder="Поиск...">
-      <button class="btn btn-secondary col-md-2 col-lg-2 col-sm-12 col-xs-12" type="submit">Поиск</button>
-    </form>
-      </li>
-      <li class="nav-item  col-md-4 col-xs-12" style=" text-align: center">
-          <a class="btn btn-primary" href="add_post.php" style="font-size: 18px; color: #fff; background-color: #3EAEE2;">
-          <i class="fas fa-plus-circle fa-1x" aria-hidden="true"></i>
-          Подать обьявление
-        </a>
-        </button>
-      </li>
-    </ul>     
-    <div  class=" col-lg-3 col-md-3 col-xs-12"  style="padding-top: 10px; text-align: center">
-    </div>
-</nav> 
-	<div id="main_content" class="col-lg-9 col-md-9 row" style="background-color: white">
+{% extends 'base.html' %}
+{% load static %}
+{% block custom_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ad_style.css' %}">
+{% endblock %}
+{% block content %}
+	<div id="main_content" class="container row" style="background-color: white">
 	
-	<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-		<img class="image_ad img-responsive" src="image/hotel.png">
-		<div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
-			<img src="image/kvartira.png" class="image_ad_mini">
-			<img src="image/kvartira2.png" class="image_ad_mini">
-			<img src="image/zal.png" class="image_ad_mini">
-			<img src="image/tourism.png" class="image_ad_mini">
-			<img src="image/futzal.png" class="image_ad_mini">
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		<div class="col-12">
+			{% for image in ad.images_set.all %}
+			<img src="{{ image.image.url }}" class="image_ad_mini" onclick="myFunction(this);">
+			{% endfor %}
+		</div>
+		<div class="col-12">
+			{% if ad.images_set.all|length > 0  %}
+		{% with ad.images_set.all|first as image %}
+		<img id="expandedImg" class="image_ad img-responsive" src="{{ image.image.url }}">
+		{% endwith %}
+			{% else %}
+                <img src="{% static 'icons/no_image.png' %}" id="expandedImg" class="image_ad img-responsive">
+                {% endif %}
 		</div>
 	</div>
-	<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 row" id="content_adphp">
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 row" id="content_adphp">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 right">
-			<h2>Отель "Берлин" шаардын ортосунда</h2>
+			<h2>{{ ad.title }}</h2>
 		</div>
-		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_username"> 
+		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_username">
 			<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 left_block_text">
 				<p>Имя</p>
 			</div>
 			<div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 right">
-				<p>Администратор Бектемир</p>
+				<p>{{ ad.name }}</p>
 			</div>
 		</div>
-		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row " id="block_price "> 
+		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row " id="block_price ">
 			<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 left_block_text">
 				<p>Цена</p>
 			</div>
 			<div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 right">
-				<p>Договорная</p>
+				{% if ad.price == 0 %}
+					<p>Договорная</p>
+				{% else %}
+					<p>{{ ad.price }} {{ ad.valute }}</p>
+				{% endif %}
 			</div>
 		</div>
-		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_phone "> 
+		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_phone ">
 			<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 left_block_text">
 				<p>Номер</p>
 			</div>
 			<div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 right">
-				<p>+996778596421</p>
+				<p>{{ ad.number }}</p>
 			</div>
 		</div>
-		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_date_release"> 
+		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_date_release">
 			<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 left_block_text">
 				<p>Дата</p>
 			</div>
 			<div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 right">
-				<p>30.05.2021</p>
+				<p>{{ ad.date }}</p>
 			</div>
 		</div>
-		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_views "> 
+		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_views ">
 			<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 left_block_text">
 				<p>Просмотров</p>
 			</div>
 			<div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 right">
-				<p>984</p>
+				<p>{{ ad.views }}</p>
 			</div>
 		</div>
-		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_text "> 
+		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 row" id="block_text ">
 			<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 left_block_text">
 				<p>Описание</p>
 			</div>
 			<div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 right">
-				<p>"Берлин" мейманканасы шаардын ортосунда жайгашкан.</p>
+				<p>{{ ad.content }}</p>
 			</div>
 		</div>
 	</div>
 	</div>
-<div class="footer ">
-			<div class="footer_right">
-				<a href="#"><i class="fa fa-facebook"></i></a>
-				<a href="#"><i class="fa fa-twitter"></i></a>
-			</div>
-			<div class="footer-left">
-				<p class="footer_links">
-					<a href="#">Главная</a>
-					·
-					<a href="#">О нас</a>
-					·
-					<a href="#">Обратная связь</a>
-				</p>
-				<p>UNI KG © <?php echo date("Y") ?></p>
-			</div>
-</div>
-</body>
-</html>
+<script>
+	function myFunction(imgs) {
+  // Get the expanded image
+  var expandImg = document.getElementById("expandedImg");
+  // Use the same src in the expanded image as the image being clicked on from the grid
+  expandImg.src = imgs.src;
+  // Show the container element (hidden with CSS)
+  expandImg.parentElement.style.display = "block";
+}
+</script>
+{% endblock %}

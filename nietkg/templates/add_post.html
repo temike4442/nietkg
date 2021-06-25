@@ -1,15 +1,27 @@
 {% extends 'base.html' %}
-{% block content %}
-		<div id="main_content" class="col-lg-8 col-md-8">
-		<h3 align="center">Добавить обьявление</h3>
-		<br>
-		<form method="POST" class="post-form" enctype="multipart/form-data">
-			{% csrf_token %}
-				{{ form.as_p }}
-		<input type="file" multiple name="images">
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+{% block panel_cat %}
 
-	</div>
+{% endblock %}
+{% block content %}
+<div class="col-12 row"  style="margin-top:80px;">
+    <div class="col-lg-3 col-md-3 col-sm-0 col-xs-0">
+
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h2 align="center">Добавить обьявление</h2>
+        <br>
+        <form method="POST" class="post-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="file" multiple name="images">
+            <br><br>
+            <button type="submit" class="form-control btn btn-primary">Отправить</button>
+        </form>
+
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-0 col-xs-0">
+
+    </div>
+</div>
 {% endblock %}
 

@@ -7,12 +7,16 @@
 }
 .image_ad_mini{
 	height: 70px;
-	margin-top: 10px;
+	margin: 0 5px;
+	margin-bottom:10px;
 	width: 70px;
 }
+.image_ad_mini:hover{
+border:1px solid red;
+}
 .image_ad{
-	max-width: 350px;
-	max-height: 450px;
+	width: 100%;
+	max-height: 800px;
 	margin:auto;
 }
 #main_content h2{
@@ -27,6 +31,7 @@
 
 #content_adphp  p{
 	font-weight: bolder;
+	text-align: start;
 }
 .right p{
 	color: #373DE9;

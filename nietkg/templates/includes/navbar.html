@@ -4,15 +4,14 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse navbar-collapse" id="mynav">
-            <a class=" col-md-2 col-lg-2 col-sm-12 col-xs-12 navbar-brand" href="index.php" style="text-align: center">Niet KG</a>
+            <a class=" col-md-2 col-lg-2 col-sm-12 col-xs-12 navbar-brand" href="{% url 'home' %}" style="text-align: center">Niet KG</a>
             <ul class="navbar-nav col-md-10 col-lg-10 col-xs-12 col-sm-12 row">
-                <li class="col-md-8 col-lg-8 col-sm-12 col-xs-12 row" style="padding: auto;">
+                <li class="col-md-8 col-lg-8 col-sm-12 col-xs-12 pl-4">
                     <img src="{% static 'icons/img_2.png' %}" class="main_icons">
                     <div id="whatsapp_number">0778549862</div>
-                    <a href="instagram.com" target="_blank">
+                    <a href="https://instagram.com" target="_blank">
                         <img src="{% static 'icons/Instagram_icon.png' %}" class="main_icons">
                     </a>
-
                 </li>
                 <li class="nav-item  col-md-4 col-xs-12" style=" text-align: center">
                     <a class="btn btn-primary" href="{% url 'add' %}" style="font-size: 18px; color: #fff; background-color: #3EAEE2;">

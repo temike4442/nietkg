@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <!--    Search content -->
 <div class="col-12 row" id="search_content">
-    <form class="form form-inline col-md-12 col-lg-12 col-xs-12 col-sm-12 row" action="search.php" method="GET">
-        <select class="form-control col-lg-3 col-md-3 col-sm-3 col-xs-12 search_border" id="exampleFormControlSelect1">
-            <option>Все районы</option>
+    <form class="form form-inline col-12 row" action="{% url 'search' %}" method="GET">
+        <select class="form-control col-lg-3 col-md-3 col-sm-3 col-xs-12 search_border" name="region">
+            <option value="">Все районы</option>
             {% for region in regions %}
-            <option>{{ region }}</option>
+            <option value="{{ region.pk }}">{{ region }}</option>
             {% endfor %}
         </select>
         <input class="form-control col-lg-7 col-md-7 col-xs-12 col-sm-9 search_border" name="search_text" type="text"
@@ -15,7 +16,7 @@
         </button>
     </form>
 </div>
-
+<hr>
 <!-- VIP content -->
 <div class="container" id="vip-content" style=" padding: 25px 0;">
     <div class="d-flex justify-content-center"><h3 style="font-weight:700;">VIP обьявления</h3></div>
@@ -47,186 +48,86 @@
             <div class="carousel-inner" role="listbox">
                 <!--First slide-->
                 <div class="carousel-item active">
-
                     <div class="col-12 row">
-
-                        <div class="col-md-3">
+                        {% for ad_vip in ad_vip_list %}
+                        <div class="col-md-3" id="vip_product">
                             <div class="card mb-2">
+                                {% with ad_vip.images_set.all|first as image %}
                                 <img class="card-img-top"
-                                     src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                                     src="{{ image.image.url }}"
                                      alt="Card image cap">
+                                {% endwith %}
                                 <div class="card-body">
-                                    <h4 class="card-title">Card title</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the
-                                        card's content.</p>
-                                    <a class="btn btn-primary">Button</a>
+                                    <h4 class="card-title">{{ ad_vip.title }}</h4>
+                                    <p class="card-text">{{ ad_vip.content }}</p>
+                                    <a class="btn btn-primary">Посмотреть</a>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-3">
-                            <div class="card mb-2">
-                                <img class="card-img-top"
-                                     src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                     alt="Card image cap">
-                                <div class="card-body">
-                                    <h4 class="card-title">Card title</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the
-                                        card's content.</p>
-                                    <a class="btn btn-primary">Button</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="card mb-2">
-                                <img class="card-img-top"
-                                     src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                     alt="Card image cap">
-                                <div class="card-body">
-                                    <h4 class="card-title">Card title</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the
-                                        card's content.</p>
-                                    <a class="btn btn-primary">Button</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="card mb-2">
-                                <img class="card-img-top"
-                                     src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(35).jpg"
-                                     alt="Card image cap">
-                                <div class="card-body">
-                                    <h4 class="card-title">Card title</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the
-                                        card's content.</p>
-                                    <a class="btn btn-primary">Button</a>
-                                </div>
-                            </div>
-                        </div>
-
+                        {% endfor %}
                     </div>
-
                 </div>
                 <!--/.First slide-->
-
-                <!--Second slide-->
-                <div class="carousel-item">
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="card mb-2">
-                                <img class="card-img-top"
-                                     src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(60).jpg"
-                                     alt="Card image cap">
-                                <div class="card-body">
-                                    <h4 class="card-title">Card title</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the
-                                        card's content.</p>
-                                    <a class="btn btn-primary">Button</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="card mb-2">
-                                <img class="card-img-top"
-                                     src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(47).jpg"
-                                     alt="Card image cap">
-                                <div class="card-body">
-                                    <h4 class="card-title">Card title</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the
-                                        card's content.</p>
-                                    <a class="btn btn-primary">Button</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="card mb-2">
-                                <img class="card-img-top"
-                                     src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(48).jpg"
-                                     alt="Card image cap">
-                                <div class="card-body">
-                                    <h4 class="card-title">Card title</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the
-                                        card's content.</p>
-                                    <a class="btn btn-primary">Button</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!--/.Second slide-->
             </div>
             <!--/.Slides-->
-
         </div>
         <!--/.Carousel Wrapper-->
-
     </div>
     <!-- Carousel wrapper -->
 </div>
 <!-- end VIP content -->
+<hr>
 <!-- Default content -->
 <div class="container" id="content" style=" padding: 25px 0;">
-    <div class="product-vip">
+<div class="d-flex justify-content-center"><h3 style="font-weight:700;">Все обьявления</h3></div>
+    <div id="product_block" class="row">
+    <!--------------->
+{% for ad in ad_list %}
+    <div class="product">
+        {% if ad.is_vip == True %}
         <div class="product__favorites mcolor">
             <b class="favorites__icon">
                 <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
-            </b><b id="vip_text">VIP</b>
+            </b>
         </div>
-        <div class="vip__img">
-            <a href="ad.php?ad='.$id.'" class="img__wrap">
-                <img src="'.$image.'" alt="" class="img">
-            </a>
-        </div>
-        <div class="product__content">
-            <div class="product__title">
-                <a href="ad.php?ad='.$id.'" class="title__text">'.$title.'</a>
-            </div>
-            <div class="product__info">
-                <div class="info__block">
-                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> '.$price.'</span>
-                </div>
-                <div class="info__block">
-                    <b class="info__icon"></b>
-                    <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> '('Y-m-d').'</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--------------->
-
-    <div class="product">
+        {% endif %}
         <div id="product__img">
-            <a href="ad.php?ad='.$id.'" class="img__wrap">
-                <img src="'.$image.'" alt="" class="img">
+            <a href="{{ ad.get_absolute_url }}" class="img__wrap">
+                {% if ad.images_set.all|length > 0  %}
+                {% with ad.images_set.all|first as image %}
+                <img src="{{ image.image.url }}" alt="" class="img">
+                {% endwith %}
+                {% else %}
+                <img src="{% static 'icons/no_image.png' %}" alt="" class="img">
+                {% endif %}
             </a>
         </div>
         <div class="product__content">
             <div class="product__title">
-                <a href="ad.php?ad='.$id.'" class="title__text">'.$title.'</a>
+                <a href="{{ ad.get_absolute_url }}" class="title__text">{{ ad.title }}</a>
             </div>
             <div class="product__info">
+                {% if ad.price == 0 %}
                 <div class="info__block">
-                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> '.$price.'</span>
+                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> Договорная</span>
+                </div>
+                {% else %}
+                <div class="info__block">
+                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> {{ ad.price }} {{ ad.valute }}</span>
+                </div>
+                {% endif %}
+                <div class="info__block">
+                    <b class="info__icon"></b>
+                    <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> {{ ad.date }}</span>
                 </div>
                 <div class="info__block">
                     <b class="info__icon"></b>
-                    <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> '('Y-m-d').'</span>
+                    <span>Просмотры: {{ ad.views }}</span>
                 </div>
             </div>
         </div>
     </div>
+    {% endfor %}
+        </div>
 </div>
 {% endblock %}

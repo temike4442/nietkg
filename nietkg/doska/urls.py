@@ -9,8 +9,14 @@ from .views import *
 
 urlpatterns = [
     path('',HomeView.as_view(),name='home'),
+    path('ad/<int:pk>',AdView.as_view(),name='ad_detail'),
     path('add/',add_new,name='add'),
+    path('search/',AdSearchView.as_view(),name='search'),
+    path('category/<int:pk>',AdCategoryView.as_view(),name='category'),
+    path('categories/',AllCategories.as_view(),name='all_categories'),
+
 ]
+
 
 if settings.DEBUG:
       urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

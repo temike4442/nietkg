@@ -1,12 +1,27 @@
 {%  extends 'base.html' %}
+{% load static %}
 {% block title %}
 <title>Поиск обьявлений</title>
 {% endblock %}
 {% block custom_css %}
-<link rel="stylesheet" type="text/css" href="css/search.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
 {% endblock %}
 
 {% block content %}
+<div class="col-12 row" id="search_content">
+    <form class="form form-inline col-12 row" action="{% url 'search' %}" method="GET">
+        <select class="form-control col-lg-3 col-md-3 col-sm-3 col-xs-12 search_border" name="region">
+            <option value="">Все районы</option>
+            {% for region in regions %}
+            <option value="{{ region.pk }}">{{ region }}</option>
+            {% endfor %}
+        </select>
+        <input class="form-control col-lg-7 col-md-7 col-xs-12 col-sm-9 search_border" name="search_text" type="text"
+               placeholder="Поиск...">
+        <button class="btn btn-secondary col-md-2 col-lg-2 col-sm-12 col-xs-12 search_border" type="submit">Поиск
+        </button>
+    </form>
+</div>
 <div id="content">
     <div style="text-align: center; margin-top: 30px; font-size: 25px;">
         <p>Результаты поиска</p>
@@ -14,26 +29,32 @@
     <hr>
     <hr>
     <div class="row" style="padding: 10%; padding-top: 0px;">
+        {% for ad in result_list %}
         <div id="search_item" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row" style="margin:10px;">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="color: black;">
-                <a href="ad.php?ad='.$id.'"> <img class="img-responsive img_search" src="'.$row[image].'"></a>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="color: black;">
+                <a href="{{ ad.get_absolute_url }}">
+                    {% with ad.images_set.all|first as image %}
+                    <img class="img-responsive img_search" src="{{ image.image.url }}">
+                    {% endwith %}
+                </a>
             </div>
-            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12" style="font-size: 20px;
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="font-size: 20px;
         font-weight: 700">
-                <a href="ad.php?ad='.$id.'"><p class="test_text">'.$title.'</p></a>
+                <a href="ad.php?ad='.$id.'"><p class="test_text">{{ ad.title }}</p></a>
                 <div class="product__info">
                     <div class="info__block">
                         <span class="search_span"><i class="fa fa-money-bill-alt" aria-hidden="true"
-                                                  style="color:#B34EE9"></i> '.$price.'</span>
+                                                  style="color:#B34EE9"></i> {{ ad.price }} {{ ad.valute }}</span>
                     </div>
                     <div class="info__block">
                         <b class="info__icon"></b>
                         <span class="search_span"><i class="fa fa-calendar-alt" aria-hidden="true"
-                                                  style="color:#B34EE9"></i> '.$mydate->Format('Y-m-d').'</span>
+                                                  style="color:#B34EE9"></i> {{ ad.date }}</span>
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

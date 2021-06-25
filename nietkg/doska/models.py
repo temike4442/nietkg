@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 
 class Region(models.Model):
     title=models.CharField('Регион',max_length=50)
@@ -26,20 +28,24 @@ class Category(models.Model):
 
 class Ad(models.Model):
     title=models.CharField('Заголовок',max_length=150,null=False,blank=False)
-    content=models.TextField('Описание',max_length=500)
+    content=models.TextField('Описание',max_length=500,null=True,blank=True)
     category=models.ForeignKey(Category,on_delete=models.PROTECT,null=False,verbose_name='Категория')
     number=models.CharField('Тел. номер',null=False,blank=False,max_length=50)
-    name=models.CharField('Имя',max_length=100)
+    name=models.CharField('Имя',max_length=100,null=True,blank=True)
     region=models.ForeignKey(Region,on_delete=models.PROTECT,verbose_name='Регион',null=False,blank=False,default=None)
-    address=models.CharField('Адрес',max_length=150,null=True)
+    address=models.CharField('Адрес',max_length=150,null=True,blank=True)
     price=models.PositiveIntegerField('Цена',help_text='0 = Договорная')
-    valute=models.ForeignKey('Valute',on_delete=models.SET_NULL,null=True,verbose_name='Валюта')
+    valute=models.ForeignKey('Valute',on_delete=models.SET_NULL,null=True,blank=True,verbose_name='Валюта')
+    views=models.PositiveIntegerField('Просмотры',default=0)
     is_active=models.BooleanField('Активация',default=False)
     is_vip=models.BooleanField('Статус VIP',default=False)
     date=models.DateTimeField('Дата',auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('ad_detail', kwargs={"pk": self.pk})
 
     class Meta:
         verbose_name='Обьявление'
@@ -52,6 +58,9 @@ class Images(models.Model):
     class Meta:
         verbose_name='Фото'
         verbose_name_plural='Фото'
+
+    def __str__(self):
+        return str(self.image)
 
 class Valute(models.Model):
     title=models.CharField('Валюта',max_length=30)
