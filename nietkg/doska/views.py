@@ -7,7 +7,7 @@ from .forms import AddForm,ImageForm
 
 class HomeView(ListView):
     model = Ad
-    queryset = Ad.objects.all()
+    queryset = Ad.objects.filter(is_active=True)
     template_name = 'index.html'
 
     def get_context_data(self, **kwargs):

@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apis.apps.ApisConfig',
+    'rest_framework',
     'doska'
 ]
 
@@ -78,8 +80,11 @@ WSGI_APPLICATION = 'nietkg.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nietkg',
+        'USER': 'temike',
+        'PASSWORD': '4442',
+        'HOST': 'localhost',
     }
 }
 
@@ -108,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Almaty'
 
 USE_I18N = True
 
@@ -116,6 +121,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+REST_FRAMEWORK={
+    'DEFAULT_PERMISION_CLASSES':[
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

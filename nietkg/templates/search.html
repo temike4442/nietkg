@@ -40,17 +40,27 @@
             </div>
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="font-size: 20px;
         font-weight: 700">
-                <a href="ad.php?ad='.$id.'"><p class="test_text">{{ ad.title }}</p></a>
+                <a href="{{ ad.get_absolute_url }}"><p class="test_text">{{ ad.title }}</p></a>
                 <div class="product__info">
                     <div class="info__block">
+                        {% if ad.price == 0 %}
+                        <span class="search_span"><i class="fa fa-money-bill-alt" aria-hidden="true"
+                                                  style="color:#B34EE9"></i> Договорная</span>
+                        {% else %}
                         <span class="search_span"><i class="fa fa-money-bill-alt" aria-hidden="true"
                                                   style="color:#B34EE9"></i> {{ ad.price }} {{ ad.valute }}</span>
+                        {% endif %}
                     </div>
                     <div class="info__block">
                         <b class="info__icon"></b>
                         <span class="search_span"><i class="fa fa-calendar-alt" aria-hidden="true"
                                                   style="color:#B34EE9"></i> {{ ad.date }}</span>
                     </div>
+                    <div class="info__block">
+                        <b class="info__icon"></b>
+                        <span class="search_span"> Просмотры {{ ad.views }}</span>
+                    </div>
+                    <br>
                 </div>
             </div>
         </div>

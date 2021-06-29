@@ -53,11 +53,12 @@ class Ad(models.Model):
 
 class Images(models.Model):
     image=models.ImageField('Изображение',upload_to='upload_images/%Y/%m/%d/')
-    ad=models.ForeignKey(Ad,on_delete=models.CASCADE)
+    ad=models.ForeignKey(Ad,on_delete=models.CASCADE,related_name='images')
 
     class Meta:
         verbose_name='Фото'
         verbose_name_plural='Фото'
+
 
     def __str__(self):
         return str(self.image)
