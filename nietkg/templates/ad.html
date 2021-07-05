@@ -8,13 +8,13 @@
 	
 	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 		<div class="col-12">
-			{% for image in ad.images_set.all %}
+			{% for image in ad.images.all %}
 			<img src="{{ image.image.url }}" class="image_ad_mini" onclick="myFunction(this);">
 			{% endfor %}
 		</div>
 		<div class="col-12">
-			{% if ad.images_set.all|length > 0  %}
-		{% with ad.images_set.all|first as image %}
+			{% if ad.images.all|length > 0  %}
+		{% with ad.images.all|first as image %}
 		<img id="expandedImg" class="image_ad img-responsive" src="{{ image.image.url }}">
 		{% endwith %}
 			{% else %}

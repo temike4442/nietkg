@@ -83,6 +83,9 @@ class AdSearchView(ListView):
         context=super(AdSearchView, self).get_context_data()
         context['category_list']=Category.objects.all()
         context['regions']=Region.objects.all()
+        context['region_context']=self.request.GET.get("region")
+        print('region: '+self.request.GET.get("region"))
+        context['search_text']=self.request.GET.get("search_text")
         return context
 
 class AdCategoryView(ListView):
@@ -94,6 +97,7 @@ class AdCategoryView(ListView):
         context['ad_list']=Ad.objects.filter(category=self.kwargs.get('pk'))
         context['category_list'] = Category.objects.all()
         context['regions'] = Region.objects.all()
+        context['category']= self.kwargs.get('pk')
         return context
 
 class AllCategories(ListView):

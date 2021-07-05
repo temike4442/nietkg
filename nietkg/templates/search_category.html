@@ -13,15 +13,11 @@
         <select class="form-control col-lg-3 col-md-3 col-sm-3 col-xs-12 search_border" name="region">
             <option value="">Все районы</option>
             {% for region in regions %}
-            {% if region.pk|slugify == region_context|slugify %}
-            <option value="{{ region.pk }}" selected>{{ region }}</option>
-            {% else %}
-            <option value="{{ region.pk }}" >{{ region }}</option>
-            {% endif %}
+            <option value="{{ region.pk }}">{{ region }}</option>
             {% endfor %}
         </select>
         <input class="form-control col-lg-7 col-md-7 col-xs-12 col-sm-9 search_border" name="search_text" type="text"
-               placeholder="Поиск..." value="{{ search_text }}">
+               placeholder="Поиск...">
         <button class="btn btn-secondary col-md-2 col-lg-2 col-sm-12 col-xs-12 search_border" type="submit">Поиск
         </button>
     </form>

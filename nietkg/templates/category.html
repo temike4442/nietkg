@@ -52,7 +52,7 @@
                         {% for ad_vip in ad_vip_list %}
                         <div class="col-md-3" id="vip_product">
                             <div class="card mb-2">
-                                {% with ad_vip.images_set.all|first as image %}
+                                {% with ad_vip.images.all|first as image %}
                                 <img class="card-img-top"
                                      src="{{ image.image.url }}"
                                      alt="Card image cap">
@@ -93,8 +93,8 @@
         {% endif %}
         <div id="product__img">
             <a href="{{ ad.get_absolute_url }}" class="img__wrap">
-                {% if ad.images_set.all|length > 0  %}
-                {% with ad.images_set.all|first as image %}
+                {% if ad.images.all|length > 0  %}
+                {% with ad.images.all|first as image %}
                 <img src="{{ image.image.url }}" alt="" class="img">
                 {% endwith %}
                 {% else %}

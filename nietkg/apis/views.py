@@ -14,10 +14,3 @@ class DetailAd(generics.RetrieveUpdateDestroyAPIView):
         pk=self.kwargs['pk']
         return models.Ad.objects.filter(pk=pk)
 
-    def get_serializer_context(self):
-        context=super(DetailAd, self).get_serializer_context()
-        context['images']=models.Images.objects.filter(ad=self.kwargs['pk'])
-        return context
-
-
-
