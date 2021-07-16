@@ -72,3 +72,15 @@ class Valute(models.Model):
     class Meta:
         verbose_name = 'Валюта'
         verbose_name_plural = 'Валюты'
+
+class Story(models.Model):
+    story_title = models.CharField('Заголовок', max_length=300, null=True, blank=True)
+    story_date = models.DateTimeField(auto_now_add=True)
+
+class StoryItem(models.Model):
+    story=models.ForeignKey(Story,on_delete=models.CASCADE)
+    story_type=[
+        'video',
+        'image',
+    ]
+    story_src=models.FileField('Ресурс',upload_to='stories/%Y/%m/%d/')

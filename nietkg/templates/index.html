@@ -17,32 +17,27 @@
     </form>
 </div>
 <hr>
+
+<!--<video width="400" height="400" controls="controls">
+    <source src="{% static 'video/video.mp4' %}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+</video>-->
 <!-- VIP content -->
 <div class="container" id="vip-content" style=" padding: 25px 0;">
     <div class="d-flex justify-content-center"><h3 style="font-weight:700;">VIP обьявления</h3></div>
-
     <!-- Carousel wrapper -->
     <div class="container my-4">
         <!--Carousel Wrapper-->
         <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
             <!--Controls-->
             <div class="col-12 d-flex justify-content-center">
                 <a href="#multi-item-example" data-slide="prev">
                     <button class="btn btn-outline-primary"><i class="fa fa-chevron-left"></i>пред.</button>
                 </a>
-                <a class="btn btn-outline-primary" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right"></i>след.</a>
+                <a class="btn btn-outline-primary" href="#multi-item-example" data-slide="next"><i
+                        class="fa fa-chevron-right"></i>след.</a>
             </div>
             <br>
             <!--/.Controls-->
-
-            <!--Indicators-->
-            <ol class="carousel-indicators">
-                <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-                <li data-target="#multi-item-example" data-slide-to="1"></li>
-                <li data-target="#multi-item-example" data-slide-to="2"></li>
-            </ol>
-            <!--/.Indicators-->
 
             <!--Slides-->
             <div class="carousel-inner" role="listbox">
@@ -50,84 +45,188 @@
                 <div class="carousel-item active">
                     <div class="col-12 row">
                         {% for ad_vip in ad_vip_list %}
-                        <div class="col-md-3" id="vip_product">
-                            <div class="card mb-2">
+                            <div class="column">
                                 {% with ad_vip.images.all|first as image %}
-                                <img class="card-img-top"
-                                     src="{{ image.image.url }}"
-                                     alt="Card image cap">
+                                <img src="{{ image.image.url }}" onclick="openModal();currentSlide(1)" class="hover-shadow"
+                                style="max-height:300px;width:100%">
                                 {% endwith %}
-                                <div class="card-body">
-                                    <h4 class="card-title">{{ ad_vip.title }}</h4>
-                                    <p class="card-text">{{ ad_vip.content }}</p>
-                                    <a class="btn btn-primary" href="{{ ad_vip.get_absolute_url }}">Посмотреть</a>
-                                </div>
+                            </div>
+                        {% endfor %}
+                        <!--/.First slide-->
+                    </div>
+                    <!--/.Slides-->
+                </div>
+                <!--/.Carousel Wrapper-->
+            </div>
+            <!-- Carousel wrapper -->
+        </div>
+        <div id="myModal" class="modal" onclick="closeModal()">
+            <div class="modal-content">
+                <span class="close cursor" onclick="closeModal()">&times;</span>
+                <div class="mySlides">
+                    <div class="numbertext">1 / 4</div>
+                    <img src="{% static 'images/horse.png' %}" style="width:100%;">
+                </div>
+                <div class="mySlides">
+                    <div class="numbertext">1 / 4</div>
+                    <img src="{% static 'images/audi.png' %}" style="width:100%;">
+                </div>
+
+                <div class="mySlides">
+                    <div class="numbertext">2 / 4</div>
+                    <img src="{% static 'images/elsom.png' %}" style="width:100%;">
+                </div>
+
+                <div class="mySlides">
+                    <div class="numbertext">3 / 4</div>
+                    <img src="{% static 'images/klinika.png' %}" style="width:100%;">
+                </div>
+
+
+                <!-- Next/previous controls -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                <!-- Caption text -->
+                <div class="caption-container">
+                    <p id="caption"></p>
+                </div>
+
+                <!-- Thumbnail image controls -->
+                <div class="column">
+                    <img class="demo" src="img1.jpg" onclick="currentSlide(1)" alt="Nature">
+                </div>
+
+                <div class="column">
+                    <img class="demo" src="img2.jpg" onclick="currentSlide(2)" alt="Snow">
+                </div>
+
+                <div class="column">
+                    <img class="demo" src="img3.jpg" onclick="currentSlide(3)" alt="Mountains">
+                </div>
+
+                <div class="column">
+                    <img class="demo" src="img4.jpg" onclick="currentSlide(4)" alt="Lights">
+                </div>
+            </div>
+        </div>
+        <!-- end VIP content -->
+        <hr>
+        <!-- Default content -->
+        <div class="container" id="content" style=" padding: 25px 0;">
+            <div class="d-flex justify-content-center"><h3 style="font-weight:700;">Все обьявления</h3></div>
+            <div id="product_block" class="row">
+                <!--------------->
+                {% for ad in ad_list %}
+                <div class="product">
+                    {% if ad.is_vip == True %}
+                    <div class="product__favorites mcolor">
+                        <b class="favorites__icon">
+                            <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
+                        </b>
+                    </div>
+                    {% endif %}
+                    <div id="product__img">
+                        <a href="{{ ad.get_absolute_url }}" class="img__wrap">
+                            {% if ad.images.all|length > 0 %}
+                            {% with ad.images.all|first as image %}
+                            <img src="{{ image.image.url }}" alt="" class="img">
+                            {% endwith %}
+                            {% else %}
+                            <img src="{% static 'icons/no_image.png' %}" alt="" class="img">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="product__content">
+                        <div class="product__title">
+                            <a href="{{ ad.get_absolute_url }}" class="title__text">{{ ad.title }}</a>
+                        </div>
+                        <div class="product__info">
+                            {% if ad.price == 0 %}
+                            <div class="info__block">
+                                <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> Договорная</span>
+                            </div>
+                            {% else %}
+                            <div class="info__block">
+                        <span><i class="fa fa-money-bill-alt"
+                                 aria-hidden="true"></i> {{ ad.price }} {{ ad.valute }}</span>
+                            </div>
+                            {% endif %}
+                            <div class="info__block">
+                                <b class="info__icon"></b>
+                                <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> {{ ad.date }}</span>
+                            </div>
+                            <div class="info__block">
+                                <b class="info__icon"></b>
+                                <span>Просмотры: {{ ad.views }}</span>
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
-                <!--/.First slide-->
+                {% endfor %}
             </div>
-            <!--/.Slides-->
-        </div>
-        <!--/.Carousel Wrapper-->
-    </div>
-    <!-- Carousel wrapper -->
-</div>
-<!-- end VIP content -->
-<hr>
-<!-- Default content -->
-<div class="container" id="content" style=" padding: 25px 0;">
-<div class="d-flex justify-content-center"><h3 style="font-weight:700;">Все обьявления</h3></div>
-    <div id="product_block" class="row">
-    <!--------------->
-{% for ad in ad_list %}
-    <div class="product">
-        {% if ad.is_vip == True %}
-        <div class="product__favorites mcolor">
-            <b class="favorites__icon">
-                <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
-            </b>
-        </div>
-        {% endif %}
-        <div id="product__img">
-            <a href="{{ ad.get_absolute_url }}" class="img__wrap">
-                {% if ad.images.all|length > 0  %}
-                {% with ad.images.all|first as image %}
-                <img src="{{ image.image.url }}" alt="" class="img">
-                {% endwith %}
-                {% else %}
-                <img src="{% static 'icons/no_image.png' %}" alt="" class="img">
+            <div class="pagination d-flex justify-content-center">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn " data-slide="prev">
+                    <i class="fa fa-chevron-left"></i>пред.
+                </a>
                 {% endif %}
-            </a>
-        </div>
-        <div class="product__content">
-            <div class="product__title">
-                <a href="{{ ad.get_absolute_url }}" class="title__text">{{ ad.title }}</a>
-            </div>
-            <div class="product__info">
-                {% if ad.price == 0 %}
-                <div class="info__block">
-                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> Договорная</span>
-                </div>
-                {% else %}
-                <div class="info__block">
-                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> {{ ad.price }} {{ ad.valute }}</span>
-                </div>
+
+                <span class="current">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+                {% if page_obj.has_next %}
+                <a class="btn " href="?page={{ page_obj.next_page_number }}" data-slide="next"><i
+                        class="fa fa-chevron-right"></i>след.</a>
                 {% endif %}
-                <div class="info__block">
-                    <b class="info__icon"></b>
-                    <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> {{ ad.date }}</span>
-                </div>
-                <div class="info__block">
-                    <b class="info__icon"></b>
-                    <span>Просмотры: {{ ad.views }}</span>
-                </div>
             </div>
         </div>
     </div>
-    {% endfor %}
-        </div>
 </div>
-{% endblock %}
+    <script>
+function openModal() {
+  document.getElementById("myModal").style.display = "block";
+}
+
+// Close the Modal
+function closeModal() {
+  document.getElementById("myModal").style.display = "none";
+}
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+
+
+
+    </script>
+    {% endblock %}
+
