@@ -9,6 +9,7 @@ class HomeView(ListView):
     model = Ad
     queryset = Ad.objects.filter(is_active=True)
     template_name = 'index.html'
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context=super(HomeView, self).get_context_data()
