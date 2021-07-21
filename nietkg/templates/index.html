@@ -60,32 +60,19 @@
             </div>
             <!-- Carousel wrapper -->
         </div>
-        <div id="myModal" class="modal" onclick="closeModal()">
+        <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close cursor" onclick="closeModal()">&times;</span>
                 <div class="mySlides">
-                    <div class="numbertext">1 / 4</div>
                     <img src="{% static 'images/horse.png' %}" style="width:100%;">
                 </div>
                 <div class="mySlides">
-                    <div class="numbertext">1 / 4</div>
                     <img src="{% static 'images/audi.png' %}" style="width:100%;">
                 </div>
 
-                <div class="mySlides">
-                    <div class="numbertext">2 / 4</div>
-                    <img src="{% static 'images/elsom.png' %}" style="width:100%;">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">3 / 4</div>
-                    <img src="{% static 'images/klinika.png' %}" style="width:100%;">
-                </div>
-
-
                 <!-- Next/previous controls -->
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                <a id="prev" class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a id="next" class="next" onclick="plusSlides(1)">&#10095;</a>
 
                 <!-- Caption text -->
                 <div class="caption-container">
@@ -224,9 +211,15 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
   captionText.innerHTML = dots[slideIndex-1].alt;
 }
+$(document).ready(function() {
+    //Starts immediately, but flag won't be true for first ten seconds
+    setInterval(function () {
+        $("#prev").click(function(){
+        alert("button");
+    });
+    }, 5000);
 
-
-
+});
     </script>
     {% endblock %}
 
