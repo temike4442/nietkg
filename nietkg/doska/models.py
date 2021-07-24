@@ -76,11 +76,13 @@ class Valute(models.Model):
 class Story(models.Model):
     story_title = models.CharField('Заголовок', max_length=300, null=True, blank=True)
     story_date = models.DateTimeField(auto_now_add=True)
+    story_category=models.ForeignKey(Category,on_delete=models.PROTECT,null=True,blank=True)
 
 class StoryItem(models.Model):
     story=models.ForeignKey(Story,on_delete=models.CASCADE)
-    story_type=[
-        'video',
-        'image',
-    ]
-    story_src=models.FileField('Ресурс',upload_to='stories/%Y/%m/%d/')
+    CHOICES=(
+        ('mp4','video'),
+        ('jpg','image'),
+    )
+    story_type=models.CharField(max_length=300, choices = CHOICES, null=False,blank=False)
+    story_src=models.FileField('Ресурс',upload_to='stories/%Y/%m/%d/',null=False,blank=False)

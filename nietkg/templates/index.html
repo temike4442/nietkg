@@ -18,51 +18,41 @@
 </div>
 <hr>
 
-<!--<video width="400" height="400" controls="controls">
-    <source src="{% static 'video/video.mp4' %}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-</video>-->
-<!-- VIP content -->
-<div class="container" id="vip-content" style=" padding: 25px 0;">
-    <div class="d-flex justify-content-center"><h3 style="font-weight:700;">VIP обьявления</h3></div>
-    <!-- Carousel wrapper -->
-    <div class="container my-4">
-        <!--Carousel Wrapper-->
-        <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-            <!--Controls-->
-            <div class="col-12 d-flex justify-content-center">
-                <a href="#multi-item-example" data-slide="prev">
-                    <button class="btn btn-outline-primary"><i class="fa fa-chevron-left"></i>пред.</button>
-                </a>
-                <a class="btn btn-outline-primary" href="#multi-item-example" data-slide="next"><i
-                        class="fa fa-chevron-right"></i>след.</a>
-            </div>
-            <br>
-            <!--/.Controls-->
 
-            <!--Slides-->
-            <div class="carousel-inner" role="listbox">
-                <!--First slide-->
-                <div class="carousel-item active">
-                    <div class="col-12 row">
-                        {% for ad_vip in ad_vip_list %}
-                            <div class="column">
-                                {% with ad_vip.images.all|first as image %}
-                                <img src="{{ image.image.url }}" onclick="openModal();currentSlide(1)" class="hover-shadow"
-                                style="max-height:300px;width:100%">
-                                {% endwith %}
-                            </div>
-                        {% endfor %}
-                        <!--/.First slide-->
-                    </div>
-                    <!--/.Slides-->
-                </div>
-                <!--/.Carousel Wrapper-->
+    <!-- Carousel wrapper -->
+    <div class="container-fluid">
+        {% if storie_list %}
+    <div class="d-flex justify-content-center"><h3 style="font-weight:700;">VIP обьявления</h3></div>
+        <!--Slides-->
+        <div class="row flex-row flex-nowrap mt-4 pb-4 pt-2" style="overflow-x: auto;">
+            {% for story in storie_list %}
+            <div class="col-lg-2 card">
+                {% with story.storyitem_set.all|first as media %}
+                <p style="text-align:center; font-weight:bold; margin-top:15px;">{{ story.story_title }}</p>
+                {% if media.story_type == 'mp4' %}
+                <video width="100%" controls="controls">
+                    <source src="{{ media.story_src.url }}"
+                            type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+                </video>
+                {% else %}
+                <img src="{{ media.story_src.url }}" onclick="openModal({{ story.pk }});currentSlide(1)"
+                     class="hover-shadow"
+                     style="max-height:300px;width:100%">
+                {% endif %}
+                {% endwith %}
             </div>
-            <!-- Carousel wrapper -->
+            {% endfor %}
+            <!--/.First slide-->
+            <!--/.Carousel Wrapper-->
         </div>
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close cursor" onclick="closeModal()">&times;</span>
+                <br>
+                <progress id="progress_story" max="100" value="0" style="width:100%"><span
+                        id="progress_story_value">0</span>%
+                </progress>
+                <br>
                 <div class="mySlides">
                     <img src="{% static 'images/horse.png' %}" style="width:100%;">
                 </div>
@@ -87,19 +77,14 @@
                 <div class="column">
                     <img class="demo" src="img2.jpg" onclick="currentSlide(2)" alt="Snow">
                 </div>
-
-                <div class="column">
-                    <img class="demo" src="img3.jpg" onclick="currentSlide(3)" alt="Mountains">
-                </div>
-
-                <div class="column">
-                    <img class="demo" src="img4.jpg" onclick="currentSlide(4)" alt="Lights">
-                </div>
             </div>
         </div>
+        {% endif %}
+    </div>
         <!-- end VIP content -->
         <hr>
         <!-- Default content -->
+    <div class="container">
         <div class="container" id="content" style=" padding: 25px 0;">
             <div class="d-flex justify-content-center"><h3 style="font-weight:700;">Все обьявления</h3></div>
             <div id="product_block" class="row">
@@ -170,56 +155,6 @@
             </div>
         </div>
     </div>
-</div>
-    <script>
-function openModal() {
-  document.getElementById("myModal").style.display = "block";
-}
 
-// Close the Modal
-function closeModal() {
-  document.getElementById("myModal").style.display = "none";
-}
-
-var slideIndex = 1;
-showSlides(slideIndex);
-
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("demo");
-  var captionText = document.getElementById("caption");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-  captionText.innerHTML = dots[slideIndex-1].alt;
-}
-$(document).ready(function() {
-    //Starts immediately, but flag won't be true for first ten seconds
-    setInterval(function () {
-        $("#prev").click(function(){
-        alert("button");
-    });
-    }, 5000);
-
-});
-    </script>
-    {% endblock %}
+{% endblock %}
 

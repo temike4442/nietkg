@@ -18,116 +18,121 @@
 </div>
 <hr>
 <!-- VIP content -->
-<div class="container" id="vip-content" style=" padding: 25px 0;">
+<div class="container-fluid" id="vip-content" style=" padding: 25px 0;">
+    {% if storie_list %}
     <div class="d-flex justify-content-center"><h3 style="font-weight:700;">VIP обьявления</h3></div>
-
-    <!-- Carousel wrapper -->
-    <div class="container my-4">
-        <!--Carousel Wrapper-->
-        <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
-            <!--Controls-->
-            <div class="col-12 d-flex justify-content-center">
-                <a href="#multi-item-example" data-slide="prev">
-                    <button class="btn btn-outline-primary"><i class="fa fa-chevron-left"></i>пред.</button>
-                </a>
-                <a class="btn btn-outline-primary" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right"></i>след.</a>
-            </div>
-            <br>
-            <!--/.Controls-->
-
-            <!--Indicators-->
-            <ol class="carousel-indicators">
-                <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-                <li data-target="#multi-item-example" data-slide-to="1"></li>
-                <li data-target="#multi-item-example" data-slide-to="2"></li>
-            </ol>
-            <!--/.Indicators-->
-
-            <!--Slides-->
-            <div class="carousel-inner" role="listbox">
-                <!--First slide-->
-                <div class="carousel-item active">
-                    <div class="col-12 row">
-                        {% for ad_vip in ad_vip_list %}
-                        <div class="col-md-3" id="vip_product">
-                            <div class="card mb-2">
-                                {% with ad_vip.images.all|first as image %}
-                                <img class="card-img-top"
-                                     src="{{ image.image.url }}"
-                                     alt="Card image cap">
-                                {% endwith %}
-                                <div class="card-body">
-                                    <h4 class="card-title">{{ ad_vip.title }}</h4>
-                                    <p class="card-text">{{ ad_vip.content }}</p>
-                                    <a class="btn btn-primary">Посмотреть</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <!--/.First slide-->
-            </div>
-            <!--/.Slides-->
+    <!--Slides-->
+    <div class="row flex-row flex-nowrap mt-4 pb-4 pt-2" style="overflow-x: auto;">
+        {% for story in storie_list %}
+        <div class="col-lg-2 card m-auto">
+            {% with story.storyitem_set.all|first as media %}
+            <p style="text-align:center; font-weight:bold; margin-top:15px;">{{ story.story_title }}</p>
+            {% if media.story_type == 'mp4' %}
+            <video width="100%" controls="controls">
+                <source src="{{ media.story_src.url }}"
+                        type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+            </video>
+            {% else %}
+            <img src="{{ media.story_src.url }}" onclick="openModal();currentSlide(1)"
+                 class="hover-shadow"
+                 style="max-height:300px;width:100%">
+            {% endif %}
+            {% endwith %}
         </div>
+        {% endfor %}
+        <!--/.First slide-->
         <!--/.Carousel Wrapper-->
     </div>
-    <!-- Carousel wrapper -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close cursor" onclick="closeModal()">&times;</span>
+            <br>
+            <progress id="progress_story" max="100" value="0" style="width:100%"><span
+                    id="progress_story_value">0</span>%
+            </progress>
+            <br>
+            <div class="mySlides">
+                <img src="{% static 'images/horse.png' %}" style="width:100%;">
+            </div>
+            <div class="mySlides">
+                <img src="{% static 'images/audi.png' %}" style="width:100%;">
+            </div>
+
+            <!-- Next/previous controls -->
+            <a id="prev" class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a id="next" class="next" onclick="plusSlides(1)">&#10095;</a>
+
+            <!-- Caption text -->
+            <div class="caption-container">
+                <p id="caption"></p>
+            </div>
+
+            <!-- Thumbnail image controls -->
+            <div class="column">
+                <img class="demo" src="img1.jpg" onclick="currentSlide(1)" alt="Nature">
+            </div>
+
+            <div class="column">
+                <img class="demo" src="img2.jpg" onclick="currentSlide(2)" alt="Snow">
+            </div>
+        </div>
+    </div>
 </div>
+{% endif %}
 <!-- end VIP content -->
 <hr>
 <!-- Default content -->
 <div class="container" id="content" style=" padding: 25px 0;">
-<div class="d-flex justify-content-center"><h3 style="font-weight:700;">Все обьявления</h3></div>
+    <div class="d-flex justify-content-center"><h3 style="font-weight:700;">Все обьявления</h3></div>
     <div id="product_block" class="row">
-    <!--------------->
-{% for ad in ad_list %}
-    <div class="product">
-        {% if ad.is_vip == True %}
-        <div class="product__favorites mcolor">
-            <b class="favorites__icon">
-                <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
-            </b>
-        </div>
-        {% endif %}
-        <div id="product__img">
-            <a href="{{ ad.get_absolute_url }}" class="img__wrap">
-                {% if ad.images.all|length > 0  %}
-                {% with ad.images.all|first as image %}
-                <img src="{{ image.image.url }}" alt="" class="img">
-                {% endwith %}
-                {% else %}
-                <img src="{% static 'icons/no_image.png' %}" alt="" class="img">
-                {% endif %}
-            </a>
-        </div>
-        <div class="product__content">
-            <div class="product__title">
-                <a href="{{ ad.get_absolute_url }}" class="title__text">{{ ad.title }}</a>
+        <!--------------->
+        {% for ad in ad_list %}
+        <div class="product">
+            {% if ad.is_vip == True %}
+            <div class="product__favorites mcolor">
+                <b class="favorites__icon">
+                    <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
+                </b>
             </div>
-            <div class="product__info">
-                {% if ad.price == 0 %}
-                <div class="info__block">
-                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> Договорная</span>
+            {% endif %}
+            <div id="product__img">
+                <a href="{{ ad.get_absolute_url }}" class="img__wrap">
+                    {% if ad.images.all|length > 0 %}
+                    {% with ad.images.all|first as image %}
+                    <img src="{{ image.image.url }}" alt="" class="img">
+                    {% endwith %}
+                    {% else %}
+                    <img src="{% static 'icons/no_image.png' %}" alt="" class="img">
+                    {% endif %}
+                </a>
+            </div>
+            <div class="product__content">
+                <div class="product__title">
+                    <a href="{{ ad.get_absolute_url }}" class="title__text">{{ ad.title }}</a>
                 </div>
-                {% else %}
-                <div class="info__block">
-                    <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> {{ ad.price }} {{ ad.valute }}</span>
-                </div>
-                {% endif %}
-                <div class="info__block">
-                    <b class="info__icon"></b>
-                    <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> {{ ad.date }}</span>
-                </div>
-                <div class="info__block">
-                    <b class="info__icon"></b>
-                    <span>Просмотры: {{ ad.views }}</span>
+                <div class="product__info">
+                    {% if ad.price == 0 %}
+                    <div class="info__block">
+                        <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> Договорная</span>
+                    </div>
+                    {% else %}
+                    <div class="info__block">
+                        <span><i class="fa fa-money-bill-alt"
+                                 aria-hidden="true"></i> {{ ad.price }} {{ ad.valute }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="info__block">
+                        <b class="info__icon"></b>
+                        <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> {{ ad.date }}</span>
+                    </div>
+                    <div class="info__block">
+                        <b class="info__icon"></b>
+                        <span>Просмотры: {{ ad.views }}</span>
+                    </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-        </div>
 </div>
 {% endblock %}

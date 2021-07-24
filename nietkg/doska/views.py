@@ -1,6 +1,4 @@
-from django.forms import modelformset_factory
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView
 from .models import *
 from .forms import AddForm,ImageForm
@@ -9,12 +7,12 @@ class HomeView(ListView):
     model = Ad
     queryset = Ad.objects.filter(is_active=True)
     template_name = 'index.html'
-    paginate_by = 3
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context=super(HomeView, self).get_context_data()
         context['category_list']=Category.objects.all()
-        context['ad_vip_list']=Ad.objects.filter(is_vip=True)
+        context['storie_list']=Story.objects.all()[:10]
         context['regions']=Region.objects.all()
         return context
 
@@ -97,6 +95,7 @@ class AdCategoryView(ListView):
         context=super().get_context_data(**kwargs)
         context['ad_list']=Ad.objects.filter(category=self.kwargs.get('pk'))
         context['category_list'] = Category.objects.all()
+        context['storie_list'] = Story.objects.filter(story_category=self.kwargs.get('pk'))
         context['regions'] = Region.objects.all()
         context['category']= self.kwargs.get('pk')
         return context
