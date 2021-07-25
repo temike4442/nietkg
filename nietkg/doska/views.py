@@ -25,7 +25,7 @@ def add_new(request):
                 Images.objects.create(image=image,ad_id=valid_form.pk,)
         return redirect('/')
     else:
-        form=AddForm()
+        form=AddForm(initial={'valute':1})
     return render(request,'add_post.html',{'form':form})
 
 

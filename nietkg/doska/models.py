@@ -35,7 +35,7 @@ class Ad(models.Model):
     region=models.ForeignKey(Region,on_delete=models.PROTECT,verbose_name='Регион',null=False,blank=False,default=None)
     address=models.CharField('Адрес',max_length=150,null=True,blank=True)
     price=models.PositiveIntegerField('Цена',help_text='0 = Договорная')
-    valute=models.ForeignKey('Valute',on_delete=models.SET_NULL,null=True,blank=True,verbose_name='Валюта')
+    valute=models.ForeignKey('Valute',related_name='valute_name' ,on_delete=models.SET_NULL,null=True,blank=True,verbose_name='Валюта')
     views=models.PositiveIntegerField('Просмотры',default=0)
     is_active=models.BooleanField('Активация',default=False)
     is_vip=models.BooleanField('Статус VIP',default=False)

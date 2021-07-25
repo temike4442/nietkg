@@ -7,6 +7,7 @@ function openModal(pk) {
 // Close the Modal
 function closeModal() {
   document.getElementById("myModal").style.display = "none";
+  document.cookie = "pk=;";
 }
 
 var slideIndex = 1;
