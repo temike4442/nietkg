@@ -7,16 +7,11 @@ class ImageSerializer(serializers.ModelSerializer):
         model = models.Images
         fields=('image',)
 
-class ValuteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Valute
-        fields=('title',)
-
-class AdSerializer(serializers.ModelSerializer):
+class AdReadSerializer(serializers.ModelSerializer):
     images_set=ImageSerializer(source='images',many=True,read_only=True)
-    #valute=serializers.CharField(source='valute.title')
-    valute=ValuteSerializer()
-    #valute_name=serializers.CharField(source='valute.title')
+    valute=serializers.ReadOnlyField(source='valute.title')
+    category=serializers.ReadOnlyField(source='category.title')
+    region=serializers.ReadOnlyField(source='region.title')
 
     class Meta:
         model=models.Ad
@@ -33,3 +28,21 @@ class AdSerializer(serializers.ModelSerializer):
             'valute',
             'images_set',
         ]
+class AdWriteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=models.Ad
+        fields = '__all__'
+
+class ValuteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Valute
+        fields = '__all__'
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.Category
+        fields = '__all__'
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.Region
+        fields = '__all__'

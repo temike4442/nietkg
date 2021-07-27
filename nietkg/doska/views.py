@@ -16,6 +16,7 @@ class HomeView(ListView):
         context['regions']=Region.objects.all()
         return context
 
+
 def add_new(request):
     if request.method=='POST':
         form=AddForm(request.POST)
