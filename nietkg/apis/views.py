@@ -3,15 +3,12 @@ from django.shortcuts import render
 from doska import models
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import AdReadSerializer,AdWriteSerializer,RegionSerializer,CategorySerializer,ValuteSerializer
+from .serializers import AdReadSerializer, AdWriteSerializer, RegionSerializer, CategorySerializer, ValuteSerializer, \
+    StorySerializer
 from rest_framework import permissions
 
 class ListAd(generics.ListAPIView):
     queryset=models.Ad.objects.all().order_by('-pk')[:50]
-    serializer_class=AdReadSerializer
-
-class SearchAd(generics.ListAPIView):
-    queryset=models.Ad.objects.filter().order_by('-pk')[:50]
     serializer_class=AdReadSerializer
 
 class DetailAd(generics.RetrieveAPIView):
@@ -58,6 +55,17 @@ class Categories(generics.ListAPIView):
 class Valutes(generics.ListAPIView):
     serializer_class = ValuteSerializer
     queryset = models.Valute.objects.all()
+
+class Stories(generics.ListAPIView):
+    serializer_class = StorySerializer
+    queryset = models.Story.objects.all().order_by('-pk')[:10]
+
+class Story_View(generics.ListAPIView):
+    serializer_class = StorySerializer
+
+    def get_queryset(self):
+        _id=self.kwargs['id']
+        return models.Story.objects.filter(pk=_id)
 '''class UserSerializer(serializers.ModelSerializer):
    class Meta:
       model = User

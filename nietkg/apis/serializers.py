@@ -1,6 +1,20 @@
 from rest_framework import serializers
 from doska import models
 
+class StoryItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.StoryItem
+        fields = ('story_type','story_src')
+
+class StorySerializer(serializers.ModelSerializer):
+    items_set = StoryItemSerializer(source='story_items',many=True,read_only=True)
+    class Meta:
+        model = models.Story
+        fields = [
+            'story_title',
+            'story_category',
+            'items_set'
+        ]
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
