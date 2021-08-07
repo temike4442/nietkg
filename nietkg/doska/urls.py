@@ -13,7 +13,8 @@ urlpatterns = [
     path('add/',add_new,name='add'),
     path('search/',AdSearchView.as_view(),name='search'),
     path('category/<int:pk>',AdCategoryView.as_view(),name='category'),
-    #path('category/<int:pk>/search/',SearchCategoryView.as_view(),name='category_search'),
+    path("story/<int:id>/", test),
+    path("category/story/<int:id>/", test,),
     path('categories/',AllCategories.as_view(),name='all_categories'),
 
 ]

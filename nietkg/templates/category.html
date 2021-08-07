@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block custom_css %}
+<script src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <!--    Search content -->
 <div class="col-12 row" id="search_content">
@@ -33,7 +37,7 @@
                         type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
             </video>
             {% else %}
-            <img src="{{ media.story_src.url }}" onclick="openModal();currentSlide(1)"
+            <img src="{{ media.story_src.url }}" onclick="openModal({{ story.pk }});"
                  class="hover-shadow"
                  style="max-height:300px;width:100%">
             {% endif %}
@@ -43,42 +47,9 @@
         <!--/.First slide-->
         <!--/.Carousel Wrapper-->
     </div>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close cursor" onclick="closeModal()">&times;</span>
-            <br>
-            <progress id="progress_story" max="100" value="0" style="width:100%"><span
-                    id="progress_story_value">0</span>%
-            </progress>
-            <br>
-            <div class="mySlides">
-                <img src="{% static 'images/horse.png' %}" style="width:100%;">
-            </div>
-            <div class="mySlides">
-                <img src="{% static 'images/audi.png' %}" style="width:100%;">
-            </div>
-
-            <!-- Next/previous controls -->
-            <a id="prev" class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a id="next" class="next" onclick="plusSlides(1)">&#10095;</a>
-
-            <!-- Caption text -->
-            <div class="caption-container">
-                <p id="caption"></p>
-            </div>
-
-            <!-- Thumbnail image controls -->
-            <div class="column">
-                <img class="demo" src="img1.jpg" onclick="currentSlide(1)" alt="Nature">
-            </div>
-
-            <div class="column">
-                <img class="demo" src="img2.jpg" onclick="currentSlide(2)" alt="Snow">
-            </div>
-        </div>
-    </div>
+    {% endif %}
 </div>
-{% endif %}
+
 <!-- end VIP content -->
 <hr>
 <!-- Default content -->

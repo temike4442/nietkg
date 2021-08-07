@@ -46,3 +46,4 @@ class RegionSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Region
         fields = '__all__'
+

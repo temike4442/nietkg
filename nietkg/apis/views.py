@@ -10,6 +10,10 @@ class ListAd(generics.ListAPIView):
     queryset=models.Ad.objects.all().order_by('-pk')[:50]
     serializer_class=AdReadSerializer
 
+class SearchAd(generics.ListAPIView):
+    queryset=models.Ad.objects.filter().order_by('-pk')[:50]
+    serializer_class=AdReadSerializer
+
 class DetailAd(generics.RetrieveAPIView):
     serializer_class = AdReadSerializer
     queryset = models.Ad.objects.all()

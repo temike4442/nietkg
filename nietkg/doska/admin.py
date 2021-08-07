@@ -13,7 +13,7 @@ class AdAdmin(admin.ModelAdmin):
     inlines =[ImagesAdminInline,]
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title','parent')
+    list_display = ('title','parent','icon')
     prepopulated_fields = {"url": ("title",)}
 
 class ValuteAdmin(admin.ModelAdmin):

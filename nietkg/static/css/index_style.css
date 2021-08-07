@@ -16,7 +16,11 @@ margin:10px;
 .row > .column {
   padding: 0 8px;
 }
-
+.leftRightModal{
+    position: relative;
+    padding: 40px;
+    z-index: 6;
+}
 .row:after {
   content: "";
   display: table;
@@ -122,9 +126,9 @@ margin:10px;
 /* Caption text */
 .caption-container {
   text-align: center;
-  background-color: black;
   padding: 2px 16px;
-  color: white;
+  font-size:25px;
+  color: black;
 }
 
 img.demo {

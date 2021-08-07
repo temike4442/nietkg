@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block custom_css %}
+    <script src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
 {% block content %}
 <!--    Search content -->
 <div class="col-12 row" id="search_content">
@@ -19,147 +22,107 @@
 <hr>
 
 
-    <!-- Carousel wrapper -->
-    <div class="container-fluid">
-        {% if storie_list %}
+<!-- Carousel wrapper -->
+<div class="container-fluid">
+    {% if storie_list %}
     <div class="d-flex justify-content-center"><h3 style="font-weight:700;">VIP обьявления</h3></div>
-        <!--Slides-->
-        <div class="row flex-row flex-nowrap mt-4 pb-4 pt-2" style="overflow-x: auto;">
-            {% for story in storie_list %}
-            <div class="col-lg-2 card">
-                {% with story.storyitem_set.all|first as media %}
-                <p style="text-align:center; font-weight:bold; margin-top:15px;">{{ story.story_title }}</p>
-                {% if media.story_type == 'mp4' %}
-                <video width="100%" controls="controls">
-                    <source src="{{ media.story_src.url }}"
-                            type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-                </video>
-                {% else %}
-                <img src="{{ media.story_src.url }}" onclick="openModal({{ story.pk }});currentSlide(1)"
-                     class="hover-shadow"
-                     style="max-height:300px;width:100%">
-                {% endif %}
-                {% endwith %}
-            </div>
-            {% endfor %}
-            <!--/.First slide-->
-            <!--/.Carousel Wrapper-->
+    <!--Slides-->
+    <div class="row flex-row flex-nowrap mt-4 pb-4 pt-2" style="overflow-x: auto;">
+        {% for story in storie_list %}
+        <div class="col-lg-2 card">
+            {% with story.storyitem_set.all|first as media %}
+                <p style="text-align:center; font-weight:bold; margin-top:15px;" class="text_story">{{ story.story_title }}</p>
+            {% if media.story_type == 'mp4' %}
+            <video width="100%" controls="controls">
+                <source src="{{ media.story_src.url }}"
+                        type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+            </video>
+            {% else %}
+            <img src="{{ media.story_src.url }}" onclick="openModal({{ story.pk }});"
+                 class="hover-shadow"
+                 style="max-height:300px;width:100%">
+            {% endif %}
+            {% endwith %}
         </div>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close cursor" onclick="closeModal()">&times;</span>
-                <br>
-                <progress id="progress_story" max="100" value="0" style="width:100%"><span
-                        id="progress_story_value">0</span>%
-                </progress>
-                <br>
-                {% for story in storie_list %}
-                {{ story.pk }}
-                {{ request.COOKIES.pk }}
-                {% if story.pk|stringformat:"i" == request.COOKIES.pk|stringformat:"i" %}
-                    {% for storyitem in story.storyitem_set.all %}
-                <div class="mySlides">
-                    <img src="{{ storyitem.story_src.url }}" style="width:100%;">
-                </div>
-                {% endfor %}
-                {% endif %}
-                {% endfor %}
-
-                <!-- Next/previous controls -->
-                <a id="prev" class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a id="next" class="next" onclick="plusSlides(1)">&#10095;</a>
-
-                <!-- Caption text -->
-                <div class="caption-container">
-                    <p id="caption"></p>
-                </div>
-
-                <!-- Thumbnail image controls -->
-                <div class="column">
-                    <img class="demo" src="img1.jpg" onclick="currentSlide(1)" alt="Nature">
-                </div>
-
-                <div class="column">
-                    <img class="demo" src="img2.jpg" onclick="currentSlide(2)" alt="Snow">
-                </div>
-            </div>
-        </div>
-        {% endif %}
+        {% endfor %}
+        <!--/.First slide-->
+        <!--/.Carousel Wrapper-->
     </div>
-        <!-- end VIP content -->
-        <hr>
-        <!-- Default content -->
-    <div class="container">
-        <div class="container" id="content" style=" padding: 25px 0;">
-            <div class="d-flex justify-content-center"><h3 style="font-weight:700;">Все обьявления</h3></div>
-            <div id="product_block" class="row">
-                <!--------------->
-                {% for ad in ad_list %}
-                <div class="product">
-                    {% if ad.is_vip == True %}
-                    <div class="product__favorites mcolor">
-                        <b class="favorites__icon">
-                            <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
-                        </b>
+    {% endif %}
+</div>
+<!-- end VIP content -->
+<hr>
+<!-- Default content -->
+<div class="container">
+    <div class="container" id="content" style=" padding: 25px 0;">
+        <div class="d-flex justify-content-center"><h3 style="font-weight:700;">Все обьявления</h3></div>
+        <div id="product_block" class="row">
+            <!--------------->
+            {% for ad in ad_list %}
+            <div class="product">
+                {% if ad.is_vip == True %}
+                <div class="product__favorites mcolor">
+                    <b class="favorites__icon">
+                        <i class="fa fa-gem blue" aria-hidden="true" style="color:white; text-align:center;"></i>
+                    </b>
+                </div>
+                {% endif %}
+                <div id="product__img">
+                    <a href="{{ ad.get_absolute_url }}" class="img__wrap">
+                        {% if ad.images.all|length > 0 %}
+                        {% with ad.images.all|first as image %}
+                        <img src="{{ image.image.url }}" alt="" class="img">
+                        {% endwith %}
+                        {% else %}
+                        <img src="{% static 'icons/no_image.png' %}" alt="" class="img">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="product__content">
+                    <div class="product__title">
+                        <a href="{{ ad.get_absolute_url }}" class="title__text">{{ ad.title }}</a>
                     </div>
-                    {% endif %}
-                    <div id="product__img">
-                        <a href="{{ ad.get_absolute_url }}" class="img__wrap">
-                            {% if ad.images.all|length > 0 %}
-                            {% with ad.images.all|first as image %}
-                            <img src="{{ image.image.url }}" alt="" class="img">
-                            {% endwith %}
-                            {% else %}
-                            <img src="{% static 'icons/no_image.png' %}" alt="" class="img">
-                            {% endif %}
-                        </a>
-                    </div>
-                    <div class="product__content">
-                        <div class="product__title">
-                            <a href="{{ ad.get_absolute_url }}" class="title__text">{{ ad.title }}</a>
+                    <div class="product__info">
+                        {% if ad.price == 0 %}
+                        <div class="info__block">
+                            <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> Договорная</span>
                         </div>
-                        <div class="product__info">
-                            {% if ad.price == 0 %}
-                            <div class="info__block">
-                                <span><i class="fa fa-money-bill-alt" aria-hidden="true"></i> Договорная</span>
-                            </div>
-                            {% else %}
-                            <div class="info__block">
+                        {% else %}
+                        <div class="info__block">
                         <span><i class="fa fa-money-bill-alt"
                                  aria-hidden="true"></i> {{ ad.price }} {{ ad.valute }}</span>
-                            </div>
-                            {% endif %}
-                            <div class="info__block">
-                                <b class="info__icon"></b>
-                                <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> {{ ad.date }}</span>
-                            </div>
-                            <div class="info__block">
-                                <b class="info__icon"></b>
-                                <span>Просмотры: {{ ad.views }}</span>
-                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="info__block">
+                            <b class="info__icon"></b>
+                            <span><i class="fa fa-calendar-alt" aria-hidden="true"></i> {{ ad.date }}</span>
+                        </div>
+                        <div class="info__block">
+                            <b class="info__icon"></b>
+                            <span>Просмотры: {{ ad.views }}</span>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-            <div class="pagination d-flex justify-content-center">
-                {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}" class="btn " data-slide="prev">
-                    <i class="fa fa-chevron-left"></i>пред.
-                </a>
-                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="pagination d-flex justify-content-center">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn " data-slide="prev">
+                <i class="fa fa-chevron-left"></i>пред.
+            </a>
+            {% endif %}
 
-                <span class="current">
+            <span class="current">
             Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
         </span>
 
-                {% if page_obj.has_next %}
-                <a class="btn " href="?page={{ page_obj.next_page_number }}" data-slide="next"><i
-                        class="fa fa-chevron-right"></i>след.</a>
-                {% endif %}
-            </div>
+            {% if page_obj.has_next %}
+            <a class="btn " href="?page={{ page_obj.next_page_number }}" data-slide="next"><i
+                    class="fa fa-chevron-right"></i>след.</a>
+            {% endif %}
         </div>
     </div>
-
+</div>
 {% endblock %}
 
