@@ -1,17 +1,11 @@
-from rest_framework import generics,filters
-from django.shortcuts import render
+from rest_framework import generics
 from doska import models
-from rest_framework.permissions import IsAuthenticated
-
-from .serializers import AdReadSerializer,AdWriteSerializer,RegionSerializer,CategorySerializer,ValuteSerializer
-from rest_framework import permissions
+from rest_framework.response import Response
+from .serializers import AdReadSerializer, AdWriteSerializer, RegionSerializer, CategorySerializer, ValuteSerializer, \
+    StorySerializer
 
 class ListAd(generics.ListAPIView):
     queryset=models.Ad.objects.all().order_by('-pk')[:50]
-    serializer_class=AdReadSerializer
-
-class SearchAd(generics.ListAPIView):
-    queryset=models.Ad.objects.filter().order_by('-pk')[:50]
     serializer_class=AdReadSerializer
 
 class DetailAd(generics.RetrieveAPIView):
@@ -21,10 +15,22 @@ class DetailAd(generics.RetrieveAPIView):
 class CreateAd(generics.ListCreateAPIView):
     queryset=models.Ad.objects.all()[:2]
     serializer_class=AdWriteSerializer
-    permission_classes = [IsAuthenticated]
+    http_method_names = ['post','delete','get','put']
 
-    def perform_create(self,serializer):
-        serializer.save()
+    def create(self, request, *args, **kwargs):
+        print(request.data)
+        images = request.FILES.getlist('images')
+        print(images)
+        cat_id = models.Category.objects.get(pk=request.data['category'])
+        region_id = models.Region.objects.get(pk=request.data['region'])
+        valute_id = models.Valute.objects.get(pk=request.data['valute'])
+        ad_id=models.Ad.objects.create(title=request.data['title'],content=request.data['content'],number=request.data['number'],
+        name=request.data['name'],address=request.data['address'],price=request.data['price'],views=request.data['views'],
+        is_active=request.data['is_active'],category=cat_id,region=region_id,valute=valute_id)
+        for image in images:
+            print(str(image)+' rrrrrrrrrrr')
+            models.Images.objects.create(ad=ad_id,image=image)
+        return Response(data=ad_id.title)
 
 class CategoryAd(generics.ListAPIView):
     serializer_class = AdReadSerializer
@@ -37,7 +43,17 @@ class SearchAd(generics.ListCreateAPIView):
     serializer_class = AdReadSerializer
 
     def get_queryset(self):
-        queryset = models.Ad.objects.filter(title__icontains=self.kwargs['search_text'])
+        category = self.kwargs['category']
+        search_text = self.kwargs['search_text']
+        region = self.kwargs['region']
+        if category == 999 and region == 999:
+            queryset = models.Ad.objects.filter(title__icontains=search_text)
+        if category == 999 and region != 999:
+            queryset = models.Ad.objects.filter(title__icontains=search_text,region=region)
+        if category != 999 and region == 999:
+            queryset = models.Ad.objects.filter(title__icontains=search_text,category=category)
+        if category != 999 and region != 999:
+            queryset = models.Ad.objects.filter(title__icontains=search_text,region=region,category=category)
         return queryset
 
 class RegionAd(generics.ListAPIView):
@@ -58,7 +74,34 @@ class Categories(generics.ListAPIView):
 class Valutes(generics.ListAPIView):
     serializer_class = ValuteSerializer
     queryset = models.Valute.objects.all()
-'''class UserSerializer(serializers.ModelSerializer):
+
+class Stories(generics.ListAPIView):
+    serializer_class = StorySerializer
+    queryset = models.Story.objects.all().order_by('-pk')[:10]
+
+class Story_View(generics.ListAPIView):
+    serializer_class = StorySerializer
+
+    def get_queryset(self):
+        _id=self.kwargs['id']
+        return models.Story.objects.filter(pk=_id)
+
+'''
+class CarCreateUpdateView(generics.ListCreateAPIView):
+    serializer_class = Car_Serializer
+    http_method_names = ['post','delete','get','put']
+    queryset = models.Car.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        print(request.data)
+        images = request.FILES.getlist('car_media')
+        car_id=models.Car.objects.create(title=request.data['title'])
+        for image in images:
+            #print(str(image)+' strrrrrr')
+            models.Car_Media.objects.create(car=car_id,image=image)
+        return Response(data=car_id.title)
+
+class UserSerializer(serializers.ModelSerializer):
    class Meta:
       model = User
       fields = "__all__"

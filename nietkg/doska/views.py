@@ -1,7 +1,7 @@
 from django.core import serializers
-from django.http import HttpResponse, JsonResponse
+from django.http import  JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView
 from .models import *
 from .forms import AddForm
 
@@ -9,7 +9,7 @@ class HomeView(ListView):
     model = Ad
     queryset = Ad.objects.filter(is_active=True)
     template_name = 'index.html'
-    paginate_by = 4
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context=super(HomeView, self).get_context_data()
@@ -56,57 +56,63 @@ class AdView(DetailView):
 class AdSearchView(ListView):
     model = Ad
     template_name = 'search.html'
-    paginate_by = 20
+    paginate_by = 10
     context_object_name = 'result_list'
+    result_count = 0
 
     def get_queryset(self):
         search_text=self.request.GET.get("search_text")
         region=self.request.GET.get("region")
+        global result_count
 
         if region!='' and search_text=='' :
-            print('region!='' and search_text==''')
+            result_count = Ad.objects.filter(region=region).count()
             return Ad.objects.filter(
                 region=region
-            )[:100]
+            )[:500]
 
         if region!='' and search_text!='' :
-            print('region!='' and search_text!=')
+            result_count = Ad.objects.filter(region=region,title__icontains=search_text).count()
             return Ad.objects.filter(
                 region=region,
                 title__icontains=search_text
-            )[:100]
+            )[:500]
 
         if region=='' and search_text!='' :
-            print('region=='' and search_text!=''')
+            result_count = Ad.objects.filter(title__icontains=search_text).count()
             return Ad.objects.filter(
                 title__icontains=search_text
-            )[:100]
+            )[:500]
 
         if region=='' and search_text=='' :
-            print('region=='' and search_text==')
-            return Ad.objects.all()[:100]
+            result_count = 500
+            return Ad.objects.all()[:500]
 
     def get_context_data(self, **kwargs):
+        global result_count
         context=super(AdSearchView, self).get_context_data()
         context['category_list'] = Category.objects.exclude(icon__isnull=True).exclude(icon__exact='')
         context['regions'] = Region.objects.exclude(is_active=False)
         context['region_context']=self.request.GET.get("region")
-        print('region: '+self.request.GET.get("region"))
         context['search_text']=self.request.GET.get("search_text")
+        context['result_count']=result_count
         return context
 
 class AdCategoryView(ListView):
     model = Ad
     template_name = 'category.html'
+    context_object_name = 'ad_list'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Ad.objects.filter(category=self.kwargs.get('pk'))[:100]
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context=super().get_context_data(**kwargs)
-        context['ad_list']=Ad.objects.filter(category=self.kwargs.get('pk'))[:100]
         context['category_list'] = Category.objects.exclude(icon__isnull=True).exclude(icon__exact='')
         context['regions'] = Region.objects.exclude(is_active=False)
         context['storie_list'] = Story.objects.filter(story_category=self.kwargs.get('pk'))
         context['category']= self.kwargs.get('pk')
+        pk = self.kwargs.get('pk')
+        context['category_title']= Category.objects.get(pk=pk)
         return context
-
-class AllCategories(ListView):
-    model = Ad

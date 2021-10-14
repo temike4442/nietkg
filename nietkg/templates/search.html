@@ -29,7 +29,7 @@
 </div>
 <div id="content">
     <div style="text-align: center; margin-top: 30px; font-size: 25px;">
-        <p>Результаты поиска</p>
+        <p>Найдено обьявлений ({{ result_count }}+)</p>
     </div>
     <hr>
     <hr>
@@ -75,5 +75,22 @@
         </div>
         {% endfor %}
     </div>
+    <div class="pagination d-flex justify-content-center">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}&region={{region_context}}&search_text={{search_text}}" class="btn " data-slide="prev">
+                <i class="fa fa-chevron-left"></i>пред.
+            </a>
+            {% endif %}
+
+            <span class="current">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+            {% if page_obj.has_next %}
+            <a class="btn " href="?page={{ page_obj.next_page_number }}
+            &region={{region_context}}&search_text={{search_text}}" data-slide="next"><i
+                    class="fa fa-chevron-right"></i>след.</a>
+            {% endif %}
+        </div>
 </div>
 {% endblock %}

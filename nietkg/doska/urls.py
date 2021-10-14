@@ -15,7 +15,6 @@ urlpatterns = [
     path('category/<int:pk>',AdCategoryView.as_view(),name='category'),
     path("story/<int:id>/", test),
     path("category/story/<int:id>/", test,),
-    path('categories/',AllCategories.as_view(),name='all_categories'),
 
 ]
 

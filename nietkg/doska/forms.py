@@ -19,7 +19,11 @@ class AddForm(forms.ModelForm):
                 attrs={
                     'class':'form-control'
                 }
-            ),'address': forms.TextInput(
+            ),'region': forms.Select(
+                attrs={
+                    'class':'form-control'
+                }),
+            'address': forms.TextInput(
                 attrs={
                     'class':'form-control'
                 }
