@@ -79,7 +79,7 @@ class Story(models.Model):
     story_category=models.ForeignKey(Category,on_delete=models.PROTECT,null=True,blank=True)
 
 class StoryItem(models.Model):
-    story=models.ForeignKey(Story,on_delete=models.CASCADE)
+    story=models.ForeignKey(Story,on_delete=models.CASCADE,related_name='story_items')
     CHOICES=(
         ('mp4','video'),
         ('jpg','image'),

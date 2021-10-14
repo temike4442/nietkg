@@ -14,7 +14,7 @@ function openModal(pk) {
         var str = '';
         var i = 0;
         story_object_items.forEach(item =>{
-            var src = 'http://127.0.0.1:8000/media/'+item['fields']['story_src'];
+            var src = 'https://temike.pythonanywhere.com/media/'+item['fields']['story_src'];
             src_list.push(src);
             str +='<div class="column"><img class="demo" src="'+src+'" onclick="currentSlide('+i+')" style="width:100%"></div>';
             i++;
