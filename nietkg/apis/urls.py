@@ -6,7 +6,7 @@ urlpatterns=[
     path('',ListAd.as_view()),
     path('<int:pk>/',DetailAd.as_view()),
     path('create/',CreateAd.as_view()),
-    path('category/<int:id>/',CategoryAd.as_view()),
+    path('category/<int:id>/<int:region>/',CategoryAd.as_view()),
     path('region/<int:id>/',RegionAd.as_view()),
     path('search/<str:search_text>/<int:region>/<int:category>/',SearchAd.as_view()),
     path('category_list/',Categories.as_view()),
