@@ -37,7 +37,10 @@ class CategoryAd(generics.ListAPIView):
 
     def get_queryset(self):
         cat_id=self.kwargs['id']
-        return models.Ad.objects.filter(category=cat_id)
+        if cat_id == 999:
+            return models.Ad.objects.all()[:50]
+        else:
+            return models.Ad.objects.filter(category=cat_id)[:50]
 
 class SearchAd(generics.ListCreateAPIView):
     serializer_class = AdReadSerializer
