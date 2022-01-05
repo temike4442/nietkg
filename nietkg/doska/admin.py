@@ -7,6 +7,7 @@ class ImagesAdminInline(admin.TabularInline):
     model = Images
 
 class AdAdmin(admin.ModelAdmin):
+    readonly_fields = ('date',)
     list_display = ('title','category','is_active','is_vip','date')
     list_display_links = ('title',)
     list_editable = ('category','is_active','is_vip')

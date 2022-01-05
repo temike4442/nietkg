@@ -19,7 +19,7 @@ class StorySerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Images
-        fields=('image',)
+        fields=('image','ad')
 
 class AdReadSerializer(serializers.ModelSerializer):
     images_set=ImageSerializer(source='images',many=True,read_only=True)
@@ -40,13 +40,25 @@ class AdReadSerializer(serializers.ModelSerializer):
             'address',
             'price',
             'valute',
+            'date',
             'images_set',
         ]
 class AdWriteSerializer(serializers.ModelSerializer):
-
+    images = ImageSerializer(many=True,required=False)
     class Meta:
-        model=models.Ad
-        fields = '__all__'
+        model = models.Ad
+        fields=[
+            'title',
+            'content',
+            'category',
+            'number',
+            'name',
+            'region',
+            'address',
+            'price',
+            'valute',
+            'images'
+        ]
 
 class ValuteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -61,3 +73,30 @@ class RegionSerializer(serializers.ModelSerializer):
         model=models.Region
         fields = '__all__'
 
+'''
+class Car_Media_Serializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Car_Media
+        fields = ('car','image',)
+
+class Car_Serializer(serializers.ModelSerializer):
+    car_media = Car_Media_Serializer(many=True,required=False)
+    class Meta:
+        model = models.Car
+        fields = ('title','car_media')
+
+
+    def create(self, validated_data):
+     #   #if 'car_media' in validated_data:
+        title = validated_data.get('title')
+        car_media = validated_data.get('car_media')
+        car_instance= models.Car.objects.create(title=title)
+        models.Car_Media.objects.create(car=car_instance,image=car_media)
+        ##for img in car_media:
+            #models.Car_Media.objects.create(car=car_instance,image=img)
+        return car_instance
+
+        #if 'car_media' not in validated_data:
+            #car_instance= models.Car.objects.create(**validated_data)
+            #return car_instance'''

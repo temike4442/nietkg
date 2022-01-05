@@ -53,7 +53,7 @@ class Ad(models.Model):
 
 class Images(models.Model):
     image=models.ImageField('Изображение',upload_to='upload_images/%Y/%m/%d/')
-    ad=models.ForeignKey(Ad,on_delete=models.CASCADE,related_name='images')
+    ad=models.ForeignKey(Ad,on_delete=models.CASCADE,related_name='images',related_query_name='images')
 
     class Meta:
         verbose_name='Фото'
@@ -86,3 +86,18 @@ class StoryItem(models.Model):
     )
     story_type=models.CharField(max_length=300, choices = CHOICES, null=False,blank=False)
     story_src=models.FileField('Ресурс',upload_to='stories/%Y/%m/%d/',null=False,blank=False)
+
+
+
+class Car(models.Model):
+    title = models.CharField('title',max_length=200)
+
+    def __str__(self):
+        return self.title
+
+class Car_Media(models.Model):
+    car = models.ForeignKey(Car,on_delete=models.CASCADE,related_name='car_media',related_query_name='car_media')
+    image = models.ImageField(upload_to='test_media/',null=False,blank=False,)
+
+    def __str__(self):
+        return f'{self.id} Media'
