@@ -119,9 +119,12 @@ USE_L10N = True
 USE_TZ = True
 
 REST_FRAMEWORK={
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S",
     'DEFAULT_PERMISION_CLASSES':[
         'rest_framework.permissions.IsAdminUser',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
 }
 
 # Static files (CSS, JavaScript, Images)

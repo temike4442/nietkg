@@ -40,6 +40,7 @@ class AdReadSerializer(serializers.ModelSerializer):
             'address',
             'price',
             'valute',
+            'date',
             'images_set',
         ]
 class AdWriteSerializer(serializers.ModelSerializer):
