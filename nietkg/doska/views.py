@@ -1,6 +1,6 @@
 from django.core import serializers
 from django.http import  JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from .models import *
 from .forms import AddForm
@@ -26,12 +26,24 @@ def add_new(request):
             for image in request.FILES.getlist('images'):
                 Images.objects.create(image=image,ad_id=valid_form.pk,)
             Trigger.objects.create(title=f'Обьявление №{valid_form.pk} отправлено на сервер.')
-        return redirect('/')
+        return redirect('success',ad_id=valid_form.pk)
     else:
         form=AddForm(initial={'valute':1})
     return render(request,'add_post.html',{'form':form})
 
-def test(request,id):
+def success_view(request,ad_id):
+    return render(request,'success.html',{'ad_id':ad_id})
+
+class SuccessView(ListView):
+    model = Ad
+    template_name = 'success.html'
+
+    def get_queryset(self):
+        ad_id = self.kwargs.get('ad_id')
+        print(f'this id {ad_id}')
+        return ad_id
+
+def story_view(id):
     story_object = Story.objects.get(pk=id)
     story_object_items = StoryItem.objects.filter(story=story_object)
     story_object_list = serializers.serialize('json',[story_object,])

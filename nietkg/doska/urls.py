@@ -11,10 +11,11 @@ urlpatterns = [
     path('',HomeView.as_view(),name='home'),
     path('ad/<int:pk>',AdView.as_view(),name='ad_detail'),
     path('add/',add_new,name='add'),
+    path('add/success/<int:ad_id>',success_view,name='success'),
     path('search/',AdSearchView.as_view(),name='search'),
     path('category/<int:pk>',AdCategoryView.as_view(),name='category'),
-    path("story/<int:id>/", test),
-    path("category/story/<int:id>/", test,),
+    path("story/<int:id>/", story_view),
+    path("category/story/<int:id>/", story_view,),
 
 ]
 
