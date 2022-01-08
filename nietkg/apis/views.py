@@ -22,9 +22,7 @@ class CreateAd(generics.ListCreateAPIView):
     http_method_names = ['post','delete','get','put']
 
     def create(self, request, *args, **kwargs):
-        print(request.data)
         images = request.FILES.getlist('images')
-        print(images)
         cat_id = models.Category.objects.get(pk=request.data['category'])
         region_id = models.Region.objects.get(pk=request.data['region'])
         valute_id = models.Valute.objects.get(pk=request.data['valute'])
@@ -32,8 +30,8 @@ class CreateAd(generics.ListCreateAPIView):
         name=request.data['name'],address=request.data['address'],price=request.data['price'],views=request.data['views'],
         is_active=request.data['is_active'],category=cat_id,region=region_id,valute=valute_id)
         for image in images:
-            print(str(image)+' rrrrrrrrrrr')
             models.Images.objects.create(ad=ad_id,image=image)
+        models.Trigger.objects.create(title=f'Обьявление №{ad_id} отправлено на сервер.')
         return Response(data=ad_id.id)
 
 class CategoryAd(generics.ListAPIView):

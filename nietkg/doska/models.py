@@ -87,7 +87,15 @@ class StoryItem(models.Model):
     story_type=models.CharField(max_length=300, choices = CHOICES, null=False,blank=False)
     story_src=models.FileField('Ресурс',upload_to='stories/%Y/%m/%d/',null=False,blank=False)
 
+class Trigger(models.Model):
+    title = models.CharField('Заголовок',max_length=120)
+    date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name='Триггер'
+        verbose_name_plural='Триггеры'
 
 class Car(models.Model):
     title = models.CharField('title',max_length=200)

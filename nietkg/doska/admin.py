@@ -13,6 +13,14 @@ class AdAdmin(admin.ModelAdmin):
     list_editable = ('category','is_active','is_vip')
     inlines =[ImagesAdminInline,]
 
+    def save_model(self, request, obj, form, change):
+        if obj.is_active == True:
+            Trigger.objects.create(title=f'Администратор активировал обьявление №{obj.pk}')
+
+class TriggerAdmin(admin.ModelAdmin):
+    readonly_fields = ('date',)
+    list_display = ('title',  'date')
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title','parent','icon')
     prepopulated_fields = {"url": ("title",)}
@@ -39,4 +47,5 @@ admin.site.register(Valute,ValuteAdmin)
 admin.site.register(Region,RegionAdmin)
 admin.site.register(Story,StoryAdmin)
 admin.site.register(Images)
+admin.site.register(Trigger,TriggerAdmin)
 admin.site.register(StoryItem)

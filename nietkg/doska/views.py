@@ -25,6 +25,7 @@ def add_new(request):
             valid_form=form.save()
             for image in request.FILES.getlist('images'):
                 Images.objects.create(image=image,ad_id=valid_form.pk,)
+            Trigger.objects.create(title=f'Обьявление №{valid_form.pk} отправлено на сервер.')
         return redirect('/')
     else:
         form=AddForm(initial={'valute':1})
