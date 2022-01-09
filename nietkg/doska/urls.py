@@ -15,7 +15,7 @@ urlpatterns = [
     path('search/',AdSearchView.as_view(),name='search'),
     path('category/<int:pk>',AdCategoryView.as_view(),name='category'),
     path("story/<int:id>/", story_view),
-    path("category/story/<int:id>/", story_view,),
+    path("category/story/<int:id>/", story_view),
 
 ]
 

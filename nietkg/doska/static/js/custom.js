@@ -4,6 +4,7 @@ var caption_text = '';
 
 function openModal(pk) {
   const cols = document.getElementById("columns");
+  console.log('DEBUG ' + pk);
   $.ajax({
     url: 'story/'+pk,
     type: 'get',

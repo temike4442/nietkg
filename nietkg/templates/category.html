@@ -29,7 +29,7 @@
     <div class="row flex-row flex-nowrap mt-4 pb-4 pt-2" style="overflow-x: auto;">
         {% for story in storie_list %}
         <div class="col-lg-2 card m-auto">
-            {% with story.storyitem_set.all|first as media %}
+            {% with story.story_items.all|first as media %}
             <p style="text-align:center; font-weight:bold; margin-top:15px;">{{ story.story_title }}</p>
             {% if media.story_type == 'mp4' %}
             <video width="100%" controls="controls">
@@ -122,5 +122,4 @@
             {% endif %}
         </div>
     </div>
-</div>
 {% endblock %}

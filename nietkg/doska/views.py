@@ -34,16 +34,7 @@ def add_new(request):
 def success_view(request,ad_id):
     return render(request,'success.html',{'ad_id':ad_id})
 
-class SuccessView(ListView):
-    model = Ad
-    template_name = 'success.html'
-
-    def get_queryset(self):
-        ad_id = self.kwargs.get('ad_id')
-        print(f'this id {ad_id}')
-        return ad_id
-
-def story_view(id):
+def story_view(request,id):
     story_object = Story.objects.get(pk=id)
     story_object_items = StoryItem.objects.filter(story=story_object)
     story_object_list = serializers.serialize('json',[story_object,])
@@ -56,7 +47,7 @@ class AdView(DetailView):
 
     def get_object(self, queryset=None):
         item=super(AdView, self).get_object(queryset)
-        item.views+=1
+        item.views +=1
         item.save()
         return item
 
